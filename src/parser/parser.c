@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 13:27:48 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/04 21:14:24 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/05 16:55:51 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ int	parser(char *cmd_line, t_shell *shell)
 	}
 	// if (create_group(shell, tokens) == EXIT_FAILURE)
 	// {
+	// 	ft_lstclear(&tokens, free);
+	// 	super_cleaner(shell);
 	// 	try_free(cmd_line);
 	// 	return (EXIT_FAILURE);
 	// }
-	try_free(cmd_line);
+	// ft_lstclear(&tokens, free);
+	// try_free(cmd_line);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/04 21:32:40 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/05 16:47:13 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_builtin
 typedef struct s_arg
 {
 	int		in_fd;
+	int		out_fd;
 	char	*limiter;
 	int		cmd_type;
 	char	**cmd;
@@ -85,8 +86,6 @@ typedef struct s_shell
 ** It also removes extra spaces and empty quotes.
 */
 int		preparser(char *cmd_line);
-char	*remove_extra_spaces(char *str, int start, int end);
-char	*remove_empty_quote(char *str);
 int		is_empty_quote(char *str, int i);
 
 
@@ -97,13 +96,18 @@ int		is_empty_quote(char *str, int i);
 int		word_or_symbol(char *cmd_line, int i, t_list *token);
 int		quote(char *cmd_line, int i, t_list *token);
 char	*parse_dollar(char *cmd_line, t_shell *shell);
+void	merge_tokens(t_list **tokens);
+void	delete_space_tokens(t_list **tokens);
+void	delete_file_tokens(t_list **tokens);
 
-
-void	skip_quote(char *str, int *i);
 int		parser(char *cmd_line, t_shell *shell);
 int		create_group(t_shell *shell, t_list *tokens);
 int		handle_all_file(t_shell *shell, t_list **tokens, t_arg *l_group);
-void	delete_used_tokens(t_list **tokens);
+void	get_command_argument(t_arg *group, t_list *tokens, int group_num);
+char	*remove_extra_spaces(char *str, int start, int end);
+char	*remove_empty_quote(char *str);
+void	skip_quote(char *str, int *i);
+
 
 
 /*
@@ -123,6 +127,8 @@ void	free_str_array(char **array);
 void	try_free(void *content);
 void	check_malloc_error(void *ptr);
 void	super_cleaner(t_shell *shell);
+void	free_group(t_arg *group, int group_num);
+void	release_fd(t_shell *shell);
 
 void	error_occured(const char *the_reason, char *error_message);
 

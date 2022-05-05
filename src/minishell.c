@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/04 21:37:19 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/05 16:54:24 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,21 @@ static void	init_shell(t_shell *shell, char **envp)
 	shell->env_str = conver_env_lst(shell->env_lst);
 	shell->std_in = dup(STDIN_FILENO);
 	shell->std_out = dup(STDOUT_FILENO);
+
 	// init_builtin(shell);
+}
+
+static void	mini_init(t_shell *shell)
+{
+	shell->out_fd = shell->std_out;
+	shell->group = NULL;
 }
 
 static void	minishell(t_shell *shell)
 {
 	int		error;
 	char 	*cmd_line;
-	// t_list	*tokens;
-	(void)shell;
+
 	cmd_line = readline("SHELL: ");
 	error = preparser(cmd_line);
 	if (error == 2 || error == 1)
@@ -44,21 +50,36 @@ static void	minishell(t_shell *shell)
 		return ;
 	}
 	if (parser(cmd_line, shell) == EXIT_FAILURE)
-	{
-		super_cleaner(shell);
 		return ;
-	}
+	// int i = 0;
+	// int	j = 0;
+
+	// while (i < shell->group_num)
+	// {
+	// 	printf("%d: ", i);
+	// 	if (shell->group[i].limiter)
+	// 		printf("limiter - %s ", shell->group[i].limiter);
+	// 	while (shell->group[i].cmd[j])
+	// 	{
+	// 		printf("%s ", shell->group[i].cmd[j]);
+	// 		j++;
+	// 	}
+	// 	printf("\n");
+	// 	i++;
+	// }
 }
 
 int main(int argc, char **argv, char **envp)
 {
 	t_shell	shell; 
-	init_shell(&shell, envp);
+
 	(void)argc;
 	(void)argv;
-	// while (1)
+	init_shell(&shell, envp);
+	while (1)
+	{
+		mini_init(&shell);
 		minishell(&shell);
-	super_cleaner(&shell);
-	close(shell.std_in);
-	close(shell.std_out);
+		free_group(shell.group, shell.group_num);
+	}
 }

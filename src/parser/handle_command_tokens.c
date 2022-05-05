@@ -1,32 +1,71 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_command_tokens.c                            :+:      :+:    :+:   */
+/*   get_command_to_exec.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 12:57:50 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/04 21:12:28 by dcahall          ###   ########.fr       */
+/*   Created: 2022/05/03 19:21:54 by dcahall           #+#    #+#             */
+/*   Updated: 2022/05/05 16:18:10 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_list	*malloc_for_arguments(t_list group, t_list *tokens)
+static void	utils_malloc_for_arguments(t_arg group, int arg_num)
 {
-	int	num_arg
+	if (arg_num)
+	{
+		group.cmd = (char **)malloc(sizeof(char *) * arg_num + 1);
+		check_malloc_error(group.cmd);
+		group.cmd[arg_num] = NULL;
+	}
 }
 
-void get_command_argument(t_arg *group, t_list *tokens, int group_num)
+static void	malloc_for_arguments(t_arg *group, t_list *tokens, int group_num)
 {
-	t_list	*runner;
-	int		i;
+	int	arg_num;
+	int	i;
 
 	i = 0;
-	runner = tokens;
-	while (i < group_num)
+	arg_num = 0;
+	while (tokens && i < group_num)
 	{
-		runner = malloc_for_arguments(group[i], runner);
+		if (tokens->type == PIPE)
+		{	
+			utils_malloc_for_arguments(group[i], arg_num);
+			tokens = tokens->next;
+			i++;
+			arg_num = 0;
+		}
+		else
+		{
+			arg_num++;
+			tokens = tokens->next;
+		}
+	}
+	utils_malloc_for_arguments(group[i], arg_num);
+}
+
+void	get_command_argument(t_arg *group, t_list *tokens, int group_num)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	malloc_for_arguments(group, tokens, group_num);
+	while (tokens)
+	{	
+		j = 0;
+		while (tokens && tokens->type != PIPE)
+		{
+			group[i].cmd[j] = ft_strdup(tokens->content);
+			check_malloc_error(group[i].cmd[j]);
+			tokens = tokens->next;
+			j++;
+		}
+		if (tokens)
+			tokens = tokens->next;
 		i++;
 	}
 }

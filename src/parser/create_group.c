@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	num_logicagroup(t_list *tokens)
+static int	num_group(t_list *tokens)
 {
 	int		count;
 
@@ -26,7 +26,7 @@ static int	num_logicagroup(t_list *tokens)
 	return (count);
 }
 
-static void init_lgroup_shell(t_shell *shell, t_arg *group, int group_num)
+static void	init_group_shell(t_shell *shell, t_arg *group, int group_num)
 {
 	int	i;
 
@@ -35,6 +35,7 @@ static void init_lgroup_shell(t_shell *shell, t_arg *group, int group_num)
 	shell->group = group;
 	while (i < group_num)
 	{
+		group[i].limiter = NULL;
 		group[i].cmd = NULL;
 		group[i].in_fd = shell->std_in;
 		group[i].out_fd = shell->std_out;
@@ -42,25 +43,36 @@ static void init_lgroup_shell(t_shell *shell, t_arg *group, int group_num)
 	}
 }
 
-void	create_logicagroup(t_shell *shell, t_list *tokens)
+static int	check_empty_group(t_arg *group, int num_group)
+{
+	int	i;
+
+	i = 0;
+	while (i < num_group)
+	{
+		if (group[i].cmd == NULL)
+			return (EXIT_FAILURE);
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	create_group(t_shell *shell, t_list *tokens)
 {
 	t_arg	*group;
 	int		group_num;
 
-	group_num = num_logicagroup(tokens);
+	group_num = num_group(tokens);
 	group = (t_arg *)malloc(sizeof(t_arg) * group_num);
 	check_malloc_error(group);
-	init_lgroup_shell(shell, group, group_num);
+	init_group_shell(shell, group, group_num);
+	merge_tokens(&tokens);
+	delete_space_tokens(&tokens);
 	if (handle_all_file(shell, &tokens, group) == EXIT_FAILURE)
-	{
-		ft_lstclear(tokens, free);
-		super_cleaner(shell);
 		return (EXIT_FAILURE);
-	}
-	delete_used_tokens(&tokens);
+	delete_file_tokens(&tokens);
 	if (!tokens)
-		return (EXIT_FAILURE);		
-	get_command_argument(shell->group, tokens, shell->group_num);
-	ft_lstclear(&tokens, free);
-	return (EXIT_SUCCESS);
+		return (EXIT_FAILURE);
+	get_command_argument(shell->group, tokens, group_num);
+	return (check_empty_group(group, group_num));
 }

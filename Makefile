@@ -4,7 +4,7 @@ GNL_PATH		=	./gnl/
 
 LIBFT_PATH		=	./libft/
 
-PARSER_PATH		=	./src//parser/
+PARSER_PATH		=	./src/parser/
 
 SRC_PATH		=	./src/
 
@@ -19,14 +19,14 @@ HEADER_PATH		=	./includes/
 LIBFT			=	libft.a
 
 PARSER_LST		=	remove_extra_spaces.c		preparser.c					parser.c\
-					create_tokens_list.c		remove_empty_quote.c		parse_dollar.c
-					# create_group.c		handle_file_tokens.c		handle_command_tokens.c\
-					# get_command_to_execve.c
+					create_tokens_list.c		remove_empty_quote.c		parse_dollar.c\
+					create_group.c				handle_file_tokens.c		handle_command_tokens.c\
+					delete_merge_tokens.c
 
 UTILS_LST		=	find_env_value.c			malloc_error_free.c			add_piece_to_str.c\
 					error_occured.c				file_opener.c				convert_env_to_lst.c\
 					convert_env_to_char.c		init_builtin.c				arg_count.c\
-					get_env_value.c	
+					get_env_value.c				realease_fd.c
 
 BUILT_IN_LST	=	cd.c						echo.c						env.c\
 					exit.c						pwd.c

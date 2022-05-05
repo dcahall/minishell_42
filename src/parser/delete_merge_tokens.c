@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delete_used_tokens.c                               :+:      :+:    :+:   */
+/*   delete_merge_tokens.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 17:03:42 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/03 19:24:10 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/05 16:45:37 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	del_elem(t_list **tokens, t_list *delete)
 	runner = tmp->next;
 	if (tmp == delete)
 	{
-		ft_lstdelone(tmp);
+		ft_lstdelone(tmp, free);
 		*tokens = runner;
 		return ;
 	}
@@ -33,36 +33,41 @@ static void	del_elem(t_list **tokens, t_list *delete)
 		{
 			tmp->next = runner->next;
 			ft_lstdelone(runner, free);
+			return ;
 		}
 		tmp = tmp->next;
 		runner = runner->next;
 	}
 }
 
-static void	unit_quote_tokens(t_list **tokens)
+void	merge_tokens(t_list **tokens)
 {
 	t_list	*runner;
-	char	*tmp;
+	t_list	*tmp1;
+	char	*tmp2;
 
 	if (!*tokens)
 		return ;
 	runner = *tokens;
-	while (runner)
+	while (runner->next)
 	{
-		while (runner->type != PIPE && runner->type != SPACE && runner->next
-			&& runner->next->type != PIPE && runner->next->type != SPACE)
+		tmp1 = runner->next;
+		if ((runner->type == WORD || runner->type == SINGLE_QUOTE
+				|| runner->type == DOUBLE_QUOTE) && (tmp1->type == WORD
+				|| tmp1->type == SINGLE_QUOTE || tmp1->type == DOUBLE_QUOTE))
 		{
-			tmp = runner->content;
-			runner->content = ft_strjoin(runner->content, runner->next->content);
+			tmp2 = runner->content;
+			runner->content = ft_strjoin(runner->content, tmp1->content);
 			check_malloc_error(runner->content);
-			try_free(tmp);
-			del_elem(tokens, runner->next);
+			try_free(tmp2);
+			del_elem(tokens, tmp1);
 		}
-		runner = runner->next;
+		else
+			runner = runner->next;
 	}
 }
 
-static void	delete_space_tokens(t_list **tokens)
+void	delete_space_tokens(t_list **tokens)
 {
 	t_list	*runner;
 
@@ -70,12 +75,12 @@ static void	delete_space_tokens(t_list **tokens)
 		return ;
 	runner = *tokens;
 	while (runner && runner->type == SPACE)
-	{get_command_to_execve.c
+	{
 		*tokens = runner->next;
 		ft_lstdelone(runner, free);
 		runner = *tokens;
 	}
-	while (runner->next)
+	while (runner && runner->next)
 	{
 		while (runner->next && runner->next->type == SPACE)
 			del_elem(tokens, runner->next);
@@ -83,7 +88,7 @@ static void	delete_space_tokens(t_list **tokens)
 	}
 }	
 
-void	delete_used_tokens(t_list **tokens)
+void	delete_file_tokens(t_list **tokens)
 {
 	t_list	*delete1;
 	t_list	*delete2;
@@ -106,6 +111,4 @@ void	delete_used_tokens(t_list **tokens)
 		else
 			runner = runner->next;
 	}
-	unit_quote_tokens(tokens);
-	delete_space_tokens(tokens);
 }

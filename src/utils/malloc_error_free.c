@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:34:46 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/04 21:14:31 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/05 16:26:28 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void	super_cleaner(t_shell *shell)
 		ft_lstclear(&shell->env_lst, free);
 	if (shell->env_str)
 		free_str_array(shell->env_str);
-
+	close(shell->std_in);
+	close(shell->std_out);
 }
