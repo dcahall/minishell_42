@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/05 16:54:24 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/06 19:00:20 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,21 @@ static void	minishell(t_shell *shell)
 	}
 	if (parser(cmd_line, shell) == EXIT_FAILURE)
 		return ;
-	// int i = 0;
-	// int	j = 0;
-
-	// while (i < shell->group_num)
-	// {
-	// 	printf("%d: ", i);
-	// 	if (shell->group[i].limiter)
-	// 		printf("limiter - %s ", shell->group[i].limiter);
-	// 	while (shell->group[i].cmd[j])
-	// 	{
-	// 		printf("%s ", shell->group[i].cmd[j]);
-	// 		j++;
-	// 	}
-	// 	printf("\n");
-	// 	i++;
-	// }
+	int i = 0;
+	int	j = 0;
+	while (i < shell->group_num)
+	{
+		printf("%d: ", i);
+		if (shell->group[i].limiter)
+			printf("limiter - %s ", shell->group[i].limiter);
+		while (shell->group[i].cmd && shell->group[i].cmd[j])
+		{
+			printf("%s ", shell->group[i].cmd[j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
 }
 
 int main(int argc, char **argv, char **envp)
@@ -82,4 +81,5 @@ int main(int argc, char **argv, char **envp)
 		minishell(&shell);
 		free_group(shell.group, shell.group_num);
 	}
+	super_cleaner(&shell);
 }

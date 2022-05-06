@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:30:27 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/04 20:09:48 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/06 16:34:40 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	find_new_start(char *add)
 	return (ft_strlen(add));
 }
 
-static char	*handle_dollar(char *str, char **envp, int *start)
+static char	*handle_dollar( char *str, char **envp, int *start)
 {
 	char	*add_str;
 	int		len;

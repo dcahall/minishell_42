@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:37:19 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/02 18:27:27 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/06 18:50:06 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int	open_file(char *file, int occasion)
 	else if (occasion == DOUBLE_REDIRECT)
 		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
+	{
 		error_occured((const char *)file, NULL);
+		return (EXIT_FAILURE);
+	}
 	return (fd);
 }

@@ -67,7 +67,7 @@ int	create_group(t_shell *shell, t_list *tokens)
 	check_malloc_error(group);
 	init_group_shell(shell, group, group_num);
 	merge_tokens(&tokens);
-	delete_space_tokens(&tokens);
+	delete_empty_tokens(&tokens);
 	if (handle_all_file(shell, &tokens, group) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	delete_file_tokens(&tokens);

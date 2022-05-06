@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 22:40:01 by dcahall           #+#    #+#             */
-/*   Updated: 2022/04/27 15:40:12 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:57:52 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*get_one_part(char *add, char *str, int start, int end)
 
 	len_str = ft_strlen(str);
 	if (start == 0 && len_str == end)
-		return (add);
+		return (ft_strdup(add));
 	else if (len_str == end && add == NULL)
 		return (ft_substr(str, 0, start));
 	else if (add == NULL && start == 0)
@@ -91,7 +91,7 @@ char	*add_piece_to_str(char *add, char *str, int start, int end)
 	len_str = (int)ft_strlen(str);
 	if (!add && len_str == end && start == 0)
 	{
-		free(str);
+		try_free(str);
 		return (NULL);
 	}
 	if ((start == 0 && len_str == end) || (len_str == end && add == NULL)

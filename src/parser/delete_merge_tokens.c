@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 17:03:42 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/05 16:45:37 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/06 17:07:00 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ void	merge_tokens(t_list **tokens)
 	}
 }
 
-void	delete_space_tokens(t_list **tokens)
+void	delete_empty_tokens(t_list **tokens)
 {
 	t_list	*runner;
 
 	if (!*tokens)
 		return ;
 	runner = *tokens;
-	while (runner && runner->type == SPACE)
+	while (runner && runner->type == EMPTY)
 	{
 		*tokens = runner->next;
 		ft_lstdelone(runner, free);
@@ -82,7 +82,7 @@ void	delete_space_tokens(t_list **tokens)
 	}
 	while (runner && runner->next)
 	{
-		while (runner->next && runner->next->type == SPACE)
+		while (runner->next && runner->next->type == EMPTY)
 			del_elem(tokens, runner->next);
 		runner = runner->next;
 	}
