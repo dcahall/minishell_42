@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:59:01 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/04 20:33:43 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/07 11:03:28 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ void	pwd(char **cmd, t_list **env_head)
 
 	(void)cmd;
 	(void)env_head;
-	cwd = getcwd(NULL, 0); 
-	if (!cwd){
-		perror("getcwd() error");
-		exit(EXIT_FAILURE);
+	cwd = getcwd(NULL, 0);
+	if (cwd)
+	{
+		ft_putendl_fd(cwd, STDOUT_FILENO);
+		g_exit_status = EXIT_SUCCESS;
 	}
-	ft_putendl_fd(cwd, STDOUT_FILENO);
+	else
+		g_exit_status = EXIT_FAILURE;
 }
