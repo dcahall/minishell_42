@@ -26,10 +26,10 @@ PARSER_LST		=	remove_extra_spaces.c		preparser.c					parser.c\
 UTILS_LST		=	find_env_value.c			malloc_error_free.c			add_piece_to_str.c\
 					error_occured.c				file_opener.c				convert_env_to_lst.c\
 					convert_env_to_char.c		init_builtin.c				arg_count.c\
-					get_env_value.c				realease_fd.c
+					get_envp.c					realease_fd.c				quicksort_2d_array.c
 
 BUILT_IN_LST	=	cd.c						echo.c						env.c\
-					exit.c						pwd.c
+					exit.c						pwd.c						export.c
 
 EXECUTE_LST		=	exec_bin.c					exec_builtin.c				exec.c
 

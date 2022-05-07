@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/06 18:33:41 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/07 11:08:31 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,7 @@
 # define EMPTY				7
 # define HERE_DOC			9
 # define NUM_OF_BUILTIN		10
-# define CD					0
-# define PWD				1
-# define ENV				2
-# define ECHO				3
-# define EXIT				4
-# define UNSET				5
-# define EXPORT 			6
+# define BUILTIN			11
 # define OUT_OF_RANGE		255
 
 int	g_exit_status;
@@ -64,14 +58,14 @@ typedef struct s_arg
 
 typedef struct s_shell
 {
-	int		std_out; 
-	int		std_in;
-	int		out_fd;
-	int		group_num;
-	t_arg	*group;
-	t_list	*env_lst;
-	char	**env_str;
-	t_builtin	builtin[NUM_OF_BUILTIN];
+	int		std_out; 						/* DEFAULT STDOUT FD */
+	int		std_in;							/* DEFAULT STDIN FD */
+	int		out_fd;							/* OUTFILE IN THE LAST GROUP */
+	int		group_num;						/* number of groups */
+	t_arg	*group;							/* list of groups */
+	t_list	*env_lst;						/* list representation of envp */
+	char	**env_str;						/* copy of envp */
+	t_builtin	builtin[NUM_OF_BUILTIN];	/* list of builtins */
 }	t_shell;
 
 
@@ -115,7 +109,7 @@ int		end_path_name(char *str, int start);
 int		len_env_key(char *str);
 
 t_list	*convert_list_char(char **envp);
-char	**conver_env_lst(t_list *env_lst);
+char	**convert_env_lst(t_list *env_lst);
 void	add_new_env(t_list **envp, char *new_env);
 void	del_env_param(t_list **envp, char *key);
 
@@ -130,23 +124,25 @@ void	error_occured(const char *the_reason, char *error_message);
 
 int		open_file(char *file, int occasion);
 
-void	init_builtin(t_shell *shell);
-int		arg_count(char	**cmd);
-char	*get_env_value(char **envp, char *var);
-// char			*get_env_value(t_list *env_head, char *var);
+void			init_builtin(t_shell *shell);
+int				arg_count(char	**cmd);
+char			*get_envp_value(t_list *env_head, char *var);
+t_list			*get_envp(t_list *env_head, char *var);
 t_builtin_func	get_builtin(char	**cmd, t_builtin *builtin);
+void			quicksort_2d_array(char **array, int left, int right);
 
 /* EXECUTE */
 
-void	execute(t_shell *shell);
-void	exec_bin(t_shell *shell, char **cmd);
-void	exec_builtin(t_shell *shell, char **cmd);
-
+void			execute(t_shell *shell);
+void			exec_bin(t_shell *shell, char **cmd);
+void			exec_builtin(t_shell *shell, char **cmd);
 /* BUILTIN */
 
-void	pwd(char **cmd, t_list **env_head);
-void	echo(char **cmd, t_list **env_head);
-void	env(char **cmd, t_list **env_head);
-void	ft_exit(char **cmd, t_list **env_head);
+void			cd(char **cmd, t_list **envp);
+void			pwd(char **cmd, t_list **env_head);
+void			echo(char **cmd, t_list **env_head);
+void			env(char **cmd, t_list **env_head);
+void			ft_exit(char **cmd, t_list **env_head);
+void			export(char	**cmd, t_list **env_head);
 
 # endif 
