@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:04:03 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/04 21:31:14 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/07 11:04:24 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	cmd_error(char *cmd)
 	exit(EXIT_FAILURE);
 }
 
-static char	*path_to_bin(char **envp, char **cmd)
+static char	*path_to_bin(t_list *envp, char **cmd)
 {
 	char	**all_paths;
 	char	*path;
 
-	all_paths = ft_split(get_env_value(envp, "PATH="), ':');
+	all_paths = ft_split(get_envp_value(envp, "PATH="), ':');
 	while (*all_paths)
 	{
 		path = ft_strjoin(*all_paths, "/");
@@ -43,7 +43,7 @@ void	exec_bin(t_shell *shell, char **cmd)
 	int		pid;
 	char	*bin_path;
 
-	bin_path = path_to_bin(shell->env_str, cmd);
+	bin_path = path_to_bin(shell->env_lst, cmd);
 	pid = fork();
 	if (!pid) {
 		execve(bin_path, cmd, shell->env_str);

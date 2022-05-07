@@ -28,7 +28,7 @@ static char	*get_list_str(t_list *node)
 	return (final_str);
 }
 
-char **conver_env_lst(t_list *env_lst)
+char **convert_env_lst(t_list *env_lst)
 {
 	char	**env;
 	int		i;
