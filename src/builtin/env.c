@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 11:02:54 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/07 11:02:56 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/07 14:36:23 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	env(char **cmd, t_list **env_head)
 
 	(void)cmd;
 	head = *env_head;
-	while (env_head && head->content)
+	while (env_head && head)
 	{
-		printf("%s%s\n", head->key, head->content);
+		ft_putstr_fd(head->key, STDOUT_FILENO);
+		ft_putendl_fd(head->content, STDOUT_FILENO);
 		head = head->next;
 	}
 }

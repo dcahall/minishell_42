@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/07 11:22:49 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/07 21:26:47 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,20 @@ static void	init_shell(t_shell *shell, char **envp)
 int main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
-	t_arg	group[6];
+	t_arg	group[7];
 	char	*cmd0[] = {"sort", NULL};
 	char	*cmd1[] = {"uniq", "-c", NULL};
 	char	*cmd2[] = {"sort", "-r", NULL};
 	char	*cmd3[] = {"head", "-3", NULL};
-	char	*cmd4[] = {"cd", "..", NULL};  	/* change home */
-	char	*cmd5[] = {"export", NULL};
+	char	*cmd4[] = {"cd", "..", NULL};
+	char	*cmd5[] = {"export", "a=b", NULL};
+	char	*cmd6[] = {"export", NULL};
 
 	(void)argc;
 	(void)argv;
 	init_shell(&shell, envp);
 	g_exit_status = 0;
-	shell.group_num = 6;
+	shell.group_num = 7;
 	shell.group = group;
 	shell.out_fd = open("outfile", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	shell.group[0].in_fd = open("infile", O_RDONLY);
@@ -103,10 +104,13 @@ int main(int argc, char **argv, char **envp)
 	shell.group[5].in_fd = 0;
 	shell.group[5].cmd = cmd5;
 	shell.group[5].cmd_type = BUILTIN;
+	shell.group[6].in_fd = 0;
+	shell.group[6].cmd = cmd6;
+	shell.group[6].cmd_type = BUILTIN;
 	execute(&shell);
 	close(shell.group[0].in_fd);
 	close(shell.out_fd);
-	// t_shell	shell; 
+	// t_shell	shell;
 
 	// (void)argc;
 	// (void)argv;
