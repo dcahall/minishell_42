@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/08 12:55:18 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/08 13:18:59 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	minishell(t_shell *shell)
 	int		error;
 	char 	*cmd_line;
 
-	cmd_line = readline("SHELL: ");
+	cmd_line = readline("SHELL: "); 
 	if (!cmd_line)
 		ctrl_d();
 	error = preparser(cmd_line);
