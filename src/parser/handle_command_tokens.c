@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_command_to_exec.c                              :+:      :+:    :+:   */
+/*   handle_command_tokens.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:21:54 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/05 16:18:10 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/07 17:33:21 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	utils_malloc_for_arguments(t_arg group, int arg_num)
+static void	utils_malloc_for_arguments(t_arg *group, int arg_num)
 {
 	if (arg_num)
 	{
-		group.cmd = (char **)malloc(sizeof(char *) * arg_num + 1);
-		check_malloc_error(group.cmd);
-		group.cmd[arg_num] = NULL;
+		group->cmd = (char **)malloc(sizeof(char *) * (arg_num + 1));
+		check_malloc_error(group->cmd);
+		group->cmd[arg_num] = NULL;
 	}
 }
 
@@ -33,7 +33,7 @@ static void	malloc_for_arguments(t_arg *group, t_list *tokens, int group_num)
 	{
 		if (tokens->type == PIPE)
 		{	
-			utils_malloc_for_arguments(group[i], arg_num);
+			utils_malloc_for_arguments(&group[i], arg_num);
 			tokens = tokens->next;
 			i++;
 			arg_num = 0;
@@ -44,7 +44,7 @@ static void	malloc_for_arguments(t_arg *group, t_list *tokens, int group_num)
 			tokens = tokens->next;
 		}
 	}
-	utils_malloc_for_arguments(group[i], arg_num);
+	utils_malloc_for_arguments(&group[i], arg_num);
 }
 
 void	get_command_argument(t_arg *group, t_list *tokens, int group_num)
