@@ -6,18 +6,11 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:04:03 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/07 11:04:24 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/08 19:41:11 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	cmd_error(char *cmd)
-{
-	ft_putstr_fd("command not found: ", STDERR_FILENO);
-	ft_putendl_fd(cmd, STDERR_FILENO);
-	exit(EXIT_FAILURE);
-}
 
 static char	*path_to_bin(t_list *envp, char **cmd)
 {
@@ -34,8 +27,8 @@ static char	*path_to_bin(t_list *envp, char **cmd)
 		free(path);
 		all_paths++;
 	}
-	cmd_error(*cmd);
-	return (NULL);
+	error_occured(*cmd, CMD_NOT_FOUND);
+	exit(EXIT_CMD_NOT_FOUND);
 }
 
 void	exec_bin(t_shell *shell, char **cmd)
@@ -47,7 +40,7 @@ void	exec_bin(t_shell *shell, char **cmd)
 	pid = fork();
 	if (!pid) {
 		execve(bin_path, cmd, shell->env_str);
-		perror("execve issue");
-		exit(1);
+		error_occured(*cmd, strerror(errno));
+		exit(EXIT_CMD_NOT_FOUND);
 	}
 }

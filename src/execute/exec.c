@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+static int	is_built_in(char *cmd, t_builtin *built_in)
+{
+	int	i;
+
+	i = 0;
+	while (i < NUM_OF_BUILTIN)
+	{
+		if (!ft_strcmp(cmd, built_in[i].name))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static void	create_pipe(int *fdout, int *fdin)
 {
 	int fdpipe[2];
@@ -48,10 +62,10 @@ void	execute(t_shell *shell)
 		fdin = dup(shell->std_in);
 	while (i < shell->group_num) {
 		redirect_io(shell, i, &fdin, &fdout);
-		if (shell->group[i].cmd_type == BINARY)
-			exec_bin(shell, shell->group[i].cmd);
-		else
+		if (!is_built_in(shell->group[i].cmd[0], shell->builtin))
 			exec_builtin(shell, shell->group[i].cmd);
+		else
+			exec_bin(shell, shell->group[i].cmd);
 		i++;
 	}
 	restore_io_defaults(shell);

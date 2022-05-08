@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_occured.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:17:47 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/04 21:20:33 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/08 19:32:14 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define EXIT_ERR_ARG			"numeric argument required"
 # define EXIT_TOO_MANY_ARG		"too many arguments"
 # define ERR_UNSET				"not a valid identifier"
-# define EXIT_STATUS_ERR_ARG	255
+# define EXIT_CMD_CNNT_EXEC		126
+# define EXIT_CMD_NOT_FOUND		127
+# define EXIT_OUT_OF_RANGE		255
 
 # endif 
