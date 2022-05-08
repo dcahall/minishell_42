@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/08 12:43:58 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/08 13:12:18 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ char			*get_envp_value(t_list *env_head, char *var);
 t_list			*get_envp(t_list *env_head, char *var);
 t_builtin_func	get_builtin(char	**cmd, t_builtin *builtin);
 void			quicksort_2d_array(char **array, int left, int right);
+int				get_2d_array_len(char **array);
 
 /* EXECUTE */
 
@@ -145,6 +146,7 @@ void			echo(char **cmd, t_list **env_head);
 void			env(char **cmd, t_list **env_head);
 void			ft_exit(char **cmd, t_list **env_head);
 void			export(char	**cmd, t_list **env_head);
+void			unset(char **cmd, t_list **env_head);
 
 /* SIGNALS */
 
