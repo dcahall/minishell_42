@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 17:03:42 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/06 17:07:00 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/07 14:23:17 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	delete_file_tokens(t_list **tokens)
 			delete1 = runner;
 			delete2 = runner->next;
 			runner = runner->next->next;
-			del_elem(tokens, delete1);
 			del_elem(tokens, delete2);
+			del_elem(tokens, delete1);
 		}
 		else
 			runner = runner->next;

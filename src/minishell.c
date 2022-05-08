@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/07 11:16:01 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/08 13:18:59 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ static void	minishell(t_shell *shell)
 	int		error;
 	char 	*cmd_line;
 
-	cmd_line = readline("SHELL: ");
+	cmd_line = readline("SHELL: "); 
+	if (!cmd_line)
+		ctrl_d();
 	error = preparser(cmd_line);
 	if (error == 2 || error == 1)
 	{
 		if (error == 2)
-		{
-			try_free(cmd_line);
 			error_occured("parser", SYNTAX_ERROR);
-		}
+		try_free(cmd_line);
 		return ;
 	}
 	if (parser(cmd_line, shell) == EXIT_FAILURE)
@@ -54,7 +54,7 @@ static void	minishell(t_shell *shell)
 	int	j = 0;
 	while (i < shell->group_num)
 	{
-		printf("%d: ", i);
+		printf("%d:", i);
 		if (shell->group[i].limiter)
 			printf("limiter - %s ", shell->group[i].limiter);
 		while (shell->group[i].cmd && shell->group[i].cmd[j])
@@ -63,6 +63,7 @@ static void	minishell(t_shell *shell)
 			j++;
 		}
 		printf("\n");
+		j = 0;
 		i++;
 	}
 }
@@ -111,11 +112,12 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_shell(&shell, envp);
-	while (1)
-	{
+	// while (1)
+	// {
 		mini_init(&shell);
 		minishell(&shell);
-		free_group(shell.group, shell.group_num);
-	}
+		// free_group(shell.group, shell.group_num);
+		// shell.group = NULL;
+	// }
 	super_cleaner(&shell);
 }

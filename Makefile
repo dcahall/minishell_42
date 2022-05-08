@@ -14,6 +14,8 @@ BUILT_IN_PATH	=	./src/builtin/
 
 EXECUTE_PATH	=	./src/execute/
 
+SIGNALS_PATH	=	./src/signals/
+
 HEADER_PATH		=	./includes/
 
 LIBFT			=	libft.a
@@ -26,21 +28,27 @@ PARSER_LST		=	remove_extra_spaces.c		preparser.c					parser.c\
 UTILS_LST		=	find_env_value.c			malloc_error_free.c			add_piece_to_str.c\
 					error_occured.c				file_opener.c				convert_env_to_lst.c\
 					convert_env_to_char.c		init_builtin.c				arg_count.c\
-					get_envp.c					realease_fd.c				quicksort_2d_array.c
+					get_envp.c					realease_fd.c				quicksort_2d_array.c\
+					get_2d_array_len.c
 
 BUILT_IN_LST	=	cd.c						echo.c						env.c\
-					exit.c						pwd.c						export.c
+					exit.c						pwd.c						export.c\
+					unset.c
 
 EXECUTE_LST		=	exec_bin.c					exec_builtin.c				exec.c
 
 SRC_LST			=	minishell.c
 
+SIGNALS_LST		=	ctrl_d.c
 
-ALL_SRC			=	$(addprefix $(SRC_PATH), $(SRC_LST)) \
-					$(addprefix $(PARSER_PATH), $(PARSER_LST)) \
+
+ALL_SRC			=	$(addprefix $(SRC_PATH), $(SRC_LST))\
+					$(addprefix $(PARSER_PATH), $(PARSER_LST))\
 					$(addprefix $(UTILS_PATH), $(UTILS_LST))\
 					$(addprefix $(BUILT_IN_PATH), $(BUILT_IN_LST))\
-					$(addprefix $(EXECUTE_PATH), $(EXECUTE_LST))
+					$(addprefix $(EXECUTE_PATH), $(EXECUTE_LST))\
+					$(addprefix $(SIGNALS_PATH), $(SIGNALS_LST))
+
 
 ALL_OBJS		=	$(patsubst %.c, %.o, $(ALL_SRC))
 
