@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   realease_fd.c                                      :+:      :+:    :+:   */
+/*   ft_str_tolower.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/02 18:44:02 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/07 14:18:30 by dcahall          ###   ########.fr       */
+/*   Created: 2022/05/08 19:16:04 by dcahall           #+#    #+#             */
+/*   Updated: 2022/05/08 19:38:59 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	release_fd(t_shell *shell)
+void	str_tolower(char **str)
 {
-	t_arg	*group;
-	int		group_num;
+	char	*tmp;
 	int		i;
 
 	i = 0;
-	if (!shell->group)
+	if (!*str)
 		return ;
-	group_num = shell->group_num;
-	group = shell->group;
-	while (i < group_num)
+	tmp = *str;
+	while (tmp[i])
 	{
-		if (group[i].out_fd != shell->std_out || group[i].out_fd != PIPE)
-			close(group[i].out_fd);
-		if (group[i].in_fd != shell->std_in || group[i].in_fd != PIPE)
-			close(group[i].in_fd);	
+		tmp[i] = ft_tolower(tmp[i]);
 		i++;
 	}
 }

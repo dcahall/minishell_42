@@ -6,21 +6,21 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:53:00 by dcahall           #+#    #+#             */
-/*   Updated: 2022/04/27 20:43:44 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/07 17:20:29 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	skip_quote(char *str, int *i)
+void	skip_quote(char *str, int *start)
 {
 	char	remember_quote;
 
-	remember_quote = str[*i];
-	*i += 1;
-	while (str[*i] != remember_quote)
-		*i += 1;
-	*i += 1;
+	remember_quote = str[*start];
+	*start += 1;
+	while (str[*start] != remember_quote)
+		*start += 1;
+	*start += 1;
 }
 
 static void	skip_space(char *str, int *start, int *end)

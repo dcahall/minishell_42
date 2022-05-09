@@ -43,12 +43,12 @@ static void	init_group_shell(t_shell *shell, t_arg *group, int group_num)
 	}
 }
 
-static int	check_empty_group(t_arg *group, int num_group)
+static int	check_empty_group(t_arg *group, int group_num)
 {
 	int	i;
 
 	i = 0;
-	while (i < num_group)
+	while (i < group_num)
 	{
 		if (group[i].cmd == NULL)
 			return (EXIT_FAILURE);
@@ -57,22 +57,43 @@ static int	check_empty_group(t_arg *group, int num_group)
 	return (EXIT_SUCCESS);
 }
 
-int	create_group(t_shell *shell, t_list *tokens)
+static void	command_to_lowercase(t_arg	*group, int	group_num)
+{
+	int	i;
+
+	i = 0;
+	while (i < group_num)
+	{
+		str_tolower(&group->cmd[0]);
+		i++;
+	}
+}
+
+int	create_group(t_shell *shell, t_list **tokens)
 {
 	t_arg	*group;
 	int		group_num;
 
-	group_num = num_group(tokens);
+	group_num = num_group(*tokens);
 	group = (t_arg *)malloc(sizeof(t_arg) * group_num);
 	check_malloc_error(group);
 	init_group_shell(shell, group, group_num);
-	merge_tokens(&tokens);
-	delete_empty_tokens(&tokens);
-	if (handle_all_file(shell, &tokens, group) == EXIT_FAILURE)
+	merge_tokens(tokens);
+	delete_empty_tokens(tokens);
+	if (handle_all_file(shell, tokens, group) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	delete_file_tokens(&tokens);
-	if (!tokens)
+	delete_file_tokens(tokens);
+	if (!*tokens)
+	{
+		release_fd(shell);
 		return (EXIT_FAILURE);
-	get_command_argument(shell->group, tokens, group_num);
-	return (check_empty_group(group, group_num));
+	}
+	get_command_argument(shell->group, *tokens, group_num);
+	if (check_empty_group(group, group_num) == EXIT_FAILURE)
+	{
+		release_fd(shell);
+		return (EXIT_FAILURE);
+	}
+	command_to_lowercase(group, group_num);
+	return (EXIT_SUCCESS);
 }

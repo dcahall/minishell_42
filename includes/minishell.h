@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/09 15:01:35 by cvine            ###   ########.fr       */
+=======
+/*   Updated: 2022/05/08 13:12:18 by dcahall          ###   ########.fr       */
+>>>>>>> 84add88bf1a441e8d96f6ba81b9913363cb5d3cf
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +81,7 @@ typedef struct s_shell
 */
 int		preparser(char *cmd_line);
 int		is_empty_quote(char *str, int i);
+int		check_empty_string(const char *cmd_line, int *i);
 
 
 /*
@@ -92,12 +97,12 @@ void	delete_empty_tokens(t_list **tokens);
 void	delete_file_tokens(t_list **tokens);
 
 int		parser(char *cmd_line, t_shell *shell);
-int		create_group(t_shell *shell, t_list *tokens);
+int		create_group(t_shell *shell, t_list **tokens);
 int		handle_all_file(t_shell *shell, t_list **tokens, t_arg *l_group);
 void	get_command_argument(t_arg *group, t_list *tokens, int group_num);
 char	*remove_extra_spaces(char *str, int start, int end);
 char	*remove_empty_quote(char *str);
-void	skip_quote(char *str, int *i);
+void	skip_quote(char *str, int *start);
 
 
 
@@ -149,5 +154,9 @@ void			echo(char **cmd, t_list **env_head);
 void			unset(char **cmd, t_list **env_head);
 void			export(char	**cmd, t_list **env_head);
 void			ft_exit(char **cmd, t_list **env_head);
+
+/* SIGNALS */
+
+int ctrl_d(void);
 
 # endif 

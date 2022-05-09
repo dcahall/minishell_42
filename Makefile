@@ -14,6 +14,8 @@ BUILT_IN_PATH	=	./src/builtin/
 
 EXECUTE_PATH	=	./src/execute/
 
+SIGNALS_PATH	=	./src/signals/
+
 HEADER_PATH		=	./includes/
 
 LIBFT			=	libft.a
@@ -37,12 +39,16 @@ EXECUTE_LST		=	exec_bin.c					exec_builtin.c				execute.c
 
 SRC_LST			=	minishell.c
 
+SIGNALS_LST		=	ctrl_d.c
 
-ALL_SRC			=	$(addprefix $(SRC_PATH), $(SRC_LST)) \
-					$(addprefix $(PARSER_PATH), $(PARSER_LST)) \
+
+ALL_SRC			=	$(addprefix $(SRC_PATH), $(SRC_LST))\
+					$(addprefix $(PARSER_PATH), $(PARSER_LST))\
 					$(addprefix $(UTILS_PATH), $(UTILS_LST))\
 					$(addprefix $(BUILT_IN_PATH), $(BUILT_IN_LST))\
-					$(addprefix $(EXECUTE_PATH), $(EXECUTE_LST))
+					$(addprefix $(EXECUTE_PATH), $(EXECUTE_LST))\
+					$(addprefix $(SIGNALS_PATH), $(SIGNALS_LST))
+
 
 ALL_OBJS		=	$(patsubst %.c, %.o, $(ALL_SRC))
 
