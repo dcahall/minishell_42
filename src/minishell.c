@@ -6,7 +6,11 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/05/09 18:12:19 by cvine            ###   ########.fr       */
+=======
 /*   Updated: 2022/05/09 17:34:48 by dcahall          ###   ########.fr       */
+>>>>>>> 84add88bf1a441e8d96f6ba81b9913363cb5d3cf
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +77,40 @@ static void	minishell(t_shell *shell)
 
 int main(int argc, char **argv, char **envp)
 {
+<<<<<<< HEAD
+	t_shell	shell;
+	t_arg	group[6];
+	char	*cmd0[] = {"sort", NULL};
+	char	*cmd1[] = {"uniq", "-c", NULL};
+	char	*cmd2[] = {"head", "-3", NULL};
+	char	*cmd3[] = {"export", "a=b", "b=c", NULL};
+	char	*cmd4[] = {"unset", "a", "b", NULL};
+	char	*cmd5[] = {"export", NULL};
+
+	(void)argc;
+	(void)argv;
+	init_shell(&shell, envp);
+	g_exit_status = 0;
+	shell.group_num = 6;
+	shell.group = group;
+	shell.out_fd = open("outfile", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	shell.group[0].in_fd = open("infile", O_RDONLY);
+	shell.group[0].cmd = cmd0;
+	shell.group[1].in_fd = 0;
+	shell.group[1].cmd = cmd1;
+	shell.group[2].in_fd = 0;
+	shell.group[2].cmd = cmd2;
+	shell.group[3].in_fd = 0;
+	shell.group[3].cmd = cmd3;
+	shell.group[4].in_fd = 0;
+	shell.group[4].cmd = cmd4;
+	shell.group[5].in_fd = 0;
+	shell.group[5].cmd = cmd5;
+	execute(&shell);
+	close(shell.group[0].in_fd);
+	close(shell.out_fd);
+=======
+>>>>>>> 84add88bf1a441e8d96f6ba81b9913363cb5d3cf
 	// t_shell	shell;
 	// t_arg	group[6];
 	// char	*cmd0[] = {"sort", NULL};

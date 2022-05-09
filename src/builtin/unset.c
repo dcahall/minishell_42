@@ -6,63 +6,53 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 14:52:32 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/07 21:25:58 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/08 18:12:57 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	is_valid_id(char *id)
-// {
-// 	int	i;
+static void	delete_var(const char *name, t_list **envp)
+{
+	t_list	*current;
+	t_list	*prev;
 
-// 	i = 0;
-// 	if (!((*id >= 'A' && *id <= 'Z') || (*id >= 'a' && *id <= 'z') || *id == '_'))
-// 	{
-// 		ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
-// 		ft_putstr_fd(id, STDERR_FILENO);
-// 		ft_putstr_fd("': ", STDERR_FILENO);
-// 		ft_putendl_fd(ERR_UNSET, STDERR_FILENO);
-// 		g_exit_status = 1;
-// 	}
-// 	while (id[i])
-// 	{
-// 		if (id[i] == '=')
-// 		{
-// 			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
-// 			ft_putstr_fd(id, STDERR_FILENO);
-// 			ft_putstr_fd("': ", STDERR_FILENO);
-// 			ft_putendl_fd(ERR_UNSET, STDERR_FILENO);
-// 			g_exit_status = 1;
-// 		}
-// 		i++;
-// 	}
-	
-// }
+	current = *envp;
+	prev = NULL;
+	while (current)
+	{
+		if (!ft_strcmp(name, current->key))
+		{
+			if (!prev)
+				(*envp)->next = current->next;
+			else
+				prev->next = current->next;
+			free(current);
+			return ;
+		}
+		prev = current;
+		current = current->next;
+	}
+}
 
-// static void	unset_var(char	**cmd, t_list **env_head)
-// {
-// 	int		i;
-// 	char	**var;
-// 	char	*key;
-// 	t_list	*tmp;
+static void	unset_var(char	**cmd, t_list **env_head)
+{
+	char	*key;
 
-// 	while (*cmd)
-// 	{
-// 		i = 0;
-// 		is_valid_id(*cmd);
-// 		key = ft_strjoin(*var, "=");
-// 		tmp = get_envp(*env_head, key);
-// 		if (tmp)
-// 			del_env_param(env_head, key);
-// 		cmd++;
-// 	}
-// }
+	while (*cmd)
+	{
+		is_valid_id(*cmd, "unset: `", UNSET);
+		key = ft_strjoin(*cmd, "=");
+		if (get_envp(*env_head, key))
+			delete_var(key, env_head);
+		cmd++;
+	}
+}
 
-// void	unset(char **cmd, t_list **env_head)
-// {
-// 	g_exit_status = 0;
-// 	if (!cmd[1])
-// 		return ;
-// 	unset_var(cmd, env_head);
-// }
+void	unset(char **cmd, t_list **env_head)
+{
+	g_exit_status = 0;
+	if (!cmd[1])
+		return ;
+	unset_var(cmd + 1, env_head);
+}

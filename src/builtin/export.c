@@ -6,25 +6,11 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:47:26 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/07 21:24:10 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/08 18:16:40 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	is_valid_id(char *id)
-{
-	if (!((*id >= 'A' && *id <= 'Z') || (*id >= 'a' && *id <= 'z')
-		|| *id == '_'))
-	{
-		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-		ft_putstr_fd(id, STDERR_FILENO);
-		ft_putstr_fd("': ", STDERR_FILENO);
-		ft_putendl_fd(ERR_UNSET, STDERR_FILENO);
-		g_exit_status = 1;
-	}
-}
-
 
 static void	print_sorted_envp(t_list **envp)
 {
@@ -49,8 +35,6 @@ static void	set_var(t_list **env_head, char *key, char *value)
 	tmp = get_envp(*env_head, key);
 	if (tmp)
 	{
-		free(key);
-		free(tmp->content);
 		tmp->content = value;
 		return ;
 	}
@@ -67,7 +51,7 @@ static void	export_var(char	**cmd, t_list **env_head)
 	while (*cmd)
 	{
 		i = 0;
-		is_valid_id(*cmd);
+		is_valid_id(*cmd, "export `", EXPORT);
 		value = ft_strchr_index(*cmd, '=', &i);
 		if (i)
 		{
