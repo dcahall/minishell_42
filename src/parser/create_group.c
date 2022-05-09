@@ -57,6 +57,18 @@ static int	check_empty_group(t_arg *group, int group_num)
 	return (EXIT_SUCCESS);
 }
 
+static void	command_to_lowercase(t_arg	*group, int	group_num)
+{
+	int	i;
+
+	i = 0;
+	while (i < group_num)
+	{
+		str_tolower(&group->cmd[0]);
+		i++;
+	}
+}
+
 int	create_group(t_shell *shell, t_list **tokens)
 {
 	t_arg	*group;
@@ -82,5 +94,6 @@ int	create_group(t_shell *shell, t_list **tokens)
 		release_fd(shell);
 		return (EXIT_FAILURE);
 	}
+	command_to_lowercase(group, group_num);
 	return (EXIT_SUCCESS);
 }

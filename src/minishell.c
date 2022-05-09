@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/08 13:18:59 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/09 17:34:48 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static void	init_shell(t_shell *shell, char **envp)
 {
 	shell->env_lst = convert_list_char(envp);
 	shell->env_str = convert_env_lst(shell->env_lst);
-	shell->std_in = dup(STDIN_FILENO);
-	shell->std_out = dup(STDOUT_FILENO);
 	init_builtin(shell);
 }
 
 static void	mini_init(t_shell *shell)
 {
+	shell->std_in = dup(STDIN_FILENO);
+	shell->std_out = dup(STDOUT_FILENO);
 	shell->out_fd = shell->std_out;
 	shell->group = NULL;
 }
@@ -40,6 +40,8 @@ static void	minishell(t_shell *shell)
 	cmd_line = readline("SHELL: "); 
 	if (!cmd_line)
 		ctrl_d();
+	if (*cmd_line)
+		add_history(cmd_line);
 	error = preparser(cmd_line);
 	if (error == 2 || error == 1)
 	{
@@ -50,22 +52,23 @@ static void	minishell(t_shell *shell)
 	}
 	if (parser(cmd_line, shell) == EXIT_FAILURE)
 		return ;
-	int i = 0;
-	int	j = 0;
-	while (i < shell->group_num)
-	{
-		printf("%d:", i);
-		if (shell->group[i].limiter)
-			printf("limiter - %s ", shell->group[i].limiter);
-		while (shell->group[i].cmd && shell->group[i].cmd[j])
-		{
-			printf("%s ", shell->group[i].cmd[j]);
-			j++;
-		}
-		printf("\n");
-		j = 0;
-		i++;
-	}
+	execute(shell);
+	// int i = 0;
+	// int	j = 0;
+	// while (i < shell->group_num)
+	// {
+	// 	printf("%d:", i);
+	// 	if (shell->group[i].limiter)
+	// 		printf("limiter - %s ", shell->group[i].limiter);
+	// 	while (shell->group[i].cmd && shell->group[i].cmd[j])
+	// 	{
+	// 		printf("%s ", shell->group[i].cmd[j]);
+	// 		j++;
+	// 	}
+	// 	printf("\n");
+	// 	j = 0;
+	// 	i++;
+	// }
 }
 
 int main(int argc, char **argv, char **envp)
@@ -112,12 +115,12 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_shell(&shell, envp);
-	// while (1)
-	// {
+	while (1)
+	{
 		mini_init(&shell);
 		minishell(&shell);
-		// free_group(shell.group, shell.group_num);
-		// shell.group = NULL;
-	// }
+		free_group(shell.group, shell.group_num);
+		shell.group = NULL;
+	}
 	super_cleaner(&shell);
 }

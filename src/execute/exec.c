@@ -13,7 +13,7 @@ static void	redirect_io(t_shell *shell, int i, int *fdin, int *fdout)
 {
 	if (shell->group[i].in_fd)
 		*fdin = shell->group[i].in_fd; /* already opened in_fd */
-	dup2(*fdin, 0); /* redirect input */
+	dup2(*fdin, STDIN_FILENO); /* redirect input */
 	close (*fdin);
 	if (i == shell->group_num - 1) /* last group */
 	{
@@ -24,16 +24,16 @@ static void	redirect_io(t_shell *shell, int i, int *fdin, int *fdout)
 			*fdout = shell->out_fd; /* already opened outfile */
 	} else
 		create_pipe(fdout, fdin); /* not last group */
-	dup2(*fdout, 1); /* redirect output */
+	dup2(*fdout, STDOUT_FILENO); /* redirect output */
 	close(*fdout);
 }
 
 static void	restore_io_defaults(t_shell *shell)
 {
-	dup2(shell->std_in, 0);
-	dup2(shell->std_out, 1);
+	dup2(shell->std_in, STDIN_FILENO);
+	dup2(shell->std_out, STDOUT_FILENO);
 	close(shell->std_in);
-	close(shell->std_out);
+	close(shell->std_out); 
 }
 
 void	execute(t_shell *shell)
