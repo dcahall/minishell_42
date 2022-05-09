@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:52:13 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/07 11:03:12 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/09 11:26:39 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	exit_with_error(const char *arg)
 	ft_putstr_fd("exit\nminishell: exit: ", STDERR_FILENO);
 	ft_putstr_fd((char *)arg, STDERR_FILENO);
 	ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-	exit(OUT_OF_RANGE);
+	exit(EXIT_OUT_OF_RANGE);
 }
 
 static void	exit_with_status(unsigned long long status)

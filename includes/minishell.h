@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/08 20:30:48 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/09 15:01:35 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <signal.h>
 # include "../libft/libft.h"
 # include "error_occured.h"
 # include "readline/readline.h"

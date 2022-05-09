@@ -33,7 +33,7 @@ BUILT_IN_LST	=	cd.c						echo.c						env.c\
 					exit.c						pwd.c						export.c\
 					unset.c
 
-EXECUTE_LST		=	exec_bin.c					exec_builtin.c				exec.c
+EXECUTE_LST		=	exec_bin.c					exec_builtin.c				execute.c
 
 SRC_LST			=	minishell.c
 
