@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 11:45:36 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/09 14:34:24 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/11 12:09:40 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ static void	create_pipe(int *fdout, int *fdin)
 /* redirect input/output fd */
 static void	redirect_io(t_shell *shell, int i, int *fdin, int *fdout)
 {
-	if (shell->group[i].in_fd)
+	if (shell->group[i].in_fd != PIPE && shell->group[i].in_fd != shell->std_in)
 		*fdin = shell->group[i].in_fd; /* already opened in_fd */
 	dup2(*fdin, STDIN_FILENO); /* redirect input */
 	close (*fdin);
+	// if (shell->group[i].limiter)
+	// 	heredoc(shell->group[i].limiter, fdin);
 	if (i == shell->group_num - 1) /* last group */
 	{
 		/* check if there is a input redirection */
@@ -67,13 +69,12 @@ static void	restore_io_defaults(t_shell *shell)
 
 void	execute(t_shell *shell)
 {
+	int	i;
 	int	fdin;
 	int	fdout;
-	int	i;
 
 	i = 0;
-	/* dup input fd if there is a redirection */
-	if (!shell->group[0].in_fd)
+	if (shell->group[0].in_fd == shell->std_in)
 		fdin = dup(shell->std_in);
 	while (i < shell->group_num)
 	{
