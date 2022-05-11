@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/09 15:01:35 by cvine            ###   ########.fr       */
-=======
-/*   Updated: 2022/05/08 13:12:18 by dcahall          ###   ########.fr       */
->>>>>>> 84add88bf1a441e8d96f6ba81b9913363cb5d3cf
+/*   Updated: 2022/05/11 11:16:05 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +129,7 @@ int		open_file(char *file, int occasion);
 int				arg_count(char	**cmd);
 void			init_builtin(t_shell *shell);
 int				get_2d_array_len(char **array);
+void			heredoc(char *limiter, int *fdin);
 t_list			*get_envp(t_list *env_head, char *var);
 char			*get_envp_value(t_list *env_head, char *var);
 t_builtin_func	get_builtin(char	**cmd, t_builtin *builtin);

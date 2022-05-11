@@ -29,7 +29,7 @@ UTILS_LST		=	find_env_value.c			malloc_error_free.c			add_piece_to_str.c\
 					error_occured.c				file_opener.c				convert_env_to_lst.c\
 					convert_env_to_char.c		init_builtin.c				arg_count.c\
 					get_envp.c					realease_fd.c				quicksort_2d_array.c\
-					get_2d_array_len.c			is_valid_id.c
+					get_2d_array_len.c			is_valid_id.c				heredoc.c
 
 BUILT_IN_LST	=	cd.c						echo.c						env.c\
 					exit.c						pwd.c						export.c\
