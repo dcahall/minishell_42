@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 11:02:54 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/08 13:13:30 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/11 16:42:58 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	env(char **cmd, t_list **env_head)
 
 	(void)cmd;
 	head = *env_head;
+	g_exit_status = EXIT_SUCCESS;
 	while (env_head && head)
 	{
 		ft_putstr_fd(head->key, STDOUT_FILENO);

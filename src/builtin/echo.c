@@ -8,6 +8,7 @@ void	echo(char **cmd, t_list **env_head)
 	(void)env_head;
 	i = 1;
 	n_flag = 1;
+	g_exit_status = EXIT_SUCCESS;
 	while (cmd[i] && !ft_strncmp(cmd[i], "-n", 2))
 	{
 		i++;

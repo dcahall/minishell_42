@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:09:15 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/08 18:21:48 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/11 16:40:32 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	cd(char **cmd, t_list **envp)
 {
 	char	*path;
 
-	g_exit_status = 0;
+	g_exit_status = EXIT_SUCCESS;
 	if (!cmd[1] || !ft_strncmp(cmd[1], "~", 1) || !ft_strncmp(cmd[1], "--", 2))
 		change_dir(get_envp_value(*envp, "HOME="), *envp, "HOME not set");
 	else if (!ft_strncmp(cmd[1], "-", 1))
