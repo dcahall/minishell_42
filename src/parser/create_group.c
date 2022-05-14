@@ -35,26 +35,12 @@ static void	init_group_shell(t_shell *shell, t_arg *group, int group_num)
 	shell->group = group;
 	while (i < group_num)
 	{
-		group[i].limiter = NULL;
+		group[i].heredoc_fd = NULL;
 		group[i].cmd = NULL;
 		group[i].in_fd = shell->std_in;
 		group[i].out_fd = shell->std_out;
 		i++;
 	}
-}
-
-static int	check_empty_group(t_arg *group, int group_num)
-{
-	int	i;
-
-	i = 0;
-	while (i < group_num)
-	{
-		if (group[i].cmd == NULL)
-			return (EXIT_FAILURE);
-		i++;
-	}
-	return (EXIT_SUCCESS);
 }
 
 static void	command_to_lowercase(t_arg	*group, int	group_num)
@@ -64,12 +50,13 @@ static void	command_to_lowercase(t_arg	*group, int	group_num)
 	i = 0;
 	while (i < group_num)
 	{
-		str_tolower(&group->cmd[0]);
+		if (group->cmd && group->cmd[0])
+			str_tolower(&group->cmd[0]);
 		i++;
 	}
 }
 
-int	create_group(t_shell *shell, t_list **tokens)
+void	create_group(t_shell *shell, t_list **tokens)
 {
 	t_arg	*group;
 	int		group_num;
@@ -80,20 +67,13 @@ int	create_group(t_shell *shell, t_list **tokens)
 	init_group_shell(shell, group, group_num);
 	merge_tokens(tokens);
 	delete_empty_tokens(tokens);
-	if (handle_all_file(shell, tokens, group) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	handle_heredoc(shell, tokens);
+	if (!*tokens)
+		return ;
+	handle_all_file(shell, tokens, group);
 	delete_file_tokens(tokens);
 	if (!*tokens)
-	{
-		release_fd(shell);
-		return (EXIT_FAILURE);
-	}
+		return ;
 	get_command_argument(shell->group, *tokens, group_num);
-	if (check_empty_group(group, group_num) == EXIT_FAILURE)
-	{
-		release_fd(shell);
-		return (EXIT_FAILURE);
-	}
 	command_to_lowercase(group, group_num);
-	return (EXIT_SUCCESS);
 }

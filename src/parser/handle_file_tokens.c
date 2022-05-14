@@ -3,26 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   handle_file_tokens.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:56:24 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/11 12:08:12 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:53:22 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_file_fd(t_shell *shell, t_arg *group, t_list *tokens, \
+static void	get_file_fd(t_shell *shell, t_arg *group, t_list *tokens, \
 						int token_type)
 {
 	int		fd;
 
 	fd = open_file(tokens->content, token_type);
-	if (fd == EXIT_FAILURE)
-	{
-		release_fd(shell);
-		return (EXIT_FAILURE);
-	}
 	if (token_type == REDIRECT_IN)
 	{
 		if (group->in_fd != shell->std_in)
@@ -35,10 +30,11 @@ static int	get_file_fd(t_shell *shell, t_arg *group, t_list *tokens, \
 			close(group->out_fd);
 		group->out_fd = fd;
 	}
-	return (EXIT_SUCCESS);
+	else if (token_type == HERE_DOC)
+		group->heredoc_fd[group->heredoc_fd_num] = fd;
 }
 
-int	handle_all_file(t_shell *shell, t_list **tokens, t_arg *group)
+void	handle_all_file(t_shell *shell, t_list **tokens, t_arg *group)
 {
 	t_list	*runner;
 	int		i;
@@ -47,22 +43,47 @@ int	handle_all_file(t_shell *shell, t_list **tokens, t_arg *group)
 	runner = *tokens;
 	while (runner)
 	{
-		if (runner->type == PIPE)
+		if (runner->type == PIPE && group[i + 1].in_fd == shell->std_in)
 		{
 			group[i + 1].in_fd = PIPE;
 			i++;
 		}
-		else if (runner->type == HERE_DOC)
-			group[i].limiter = ft_strdup(runner->next->content);
 		else if (runner->type == REDIRECT_IN || runner->type == REDIRECT_OUT
 			|| runner->type == DOUBLE_REDIRECT)
-		{
-			if (get_file_fd(shell, &group[i], runner->next, \
-				runner->type) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
+			get_file_fd(shell, &group[i], runner->next, runner->type);
 		runner = runner->next;
 	}
 	shell->out_fd = group[i].out_fd;
-	return (EXIT_SUCCESS);
+}
+
+static void	malloc_array_fd(t_arg *group, t_list *tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens && tokens->type != PIPE)
+	{
+		i++;
+		tokens = tokens->next;
+	}
+	group->heredoc_fd = malloc(sizeof(int) * i);
+	check_malloc_error(group->heredoc_fd);
+}
+
+t_list	*handle_heredoc_files(t_shell *shell, t_arg *group, t_list *tokens)
+{
+	int		heredoc_fd_num;
+
+	heredoc_fd_num = 0;
+	close(group->in_fd);
+	malloc_array_fd(group, tokens);
+	while (tokens && tokens->type != PIPE)
+	{
+		group->heredoc_fd_num = heredoc_fd_num;
+		get_file_fd(shell, group, tokens, REDIRECT_IN);
+		heredoc_fd_num++;
+		tokens = tokens->next;
+	}
+	group->heredoc_fd_num = heredoc_fd_num;
+	return (tokens);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/11 12:10:07 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/12 19:17:56 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,35 @@ static void	minishell(t_shell *shell)
 	}
 	if (parser(cmd_line, shell) == EXIT_FAILURE)
 		return ;
-	execute(shell);
-	// int i = 0;
-	// int	j = 0;
-	// while (i < shell->group_num)
-	// {
-	// 	printf("%d:", i);
-	// 	if (shell->group[i].limiter)
-	// 		printf("limiter - %s ", shell->group[i].limiter);
-	// 	while (shell->group[i].cmd && shell->group[i].cmd[j])
-	// 	{
-	// 		printf("%s ", shell->group[i].cmd[j]);
-	// 		j++;
-	// 	}
-	// 	printf("\n");
-	// 	j = 0;
-	// 	i++;
-	// }
+	// execute(shell);
+	int i = 0;
+	int	j = 0;
+	int	k = 0;
+	while (i < shell->group_num)
+	{
+		printf("%d:", i);
+		// if (shell->group[i].limiter)
+		// 	printf("limiter - %s ", shell->group[i].limiter);
+		while (shell->group[i].cmd && shell->group[i].cmd[j])
+		{
+			printf("%s ", shell->group[i].cmd[j]);
+			j++;
+		}
+		if (shell->group[i].heredoc_fd)
+		{
+			printf("fd = ");
+			while (k < shell->group[i].heredoc_fd_num)
+			{
+				printf("%d ", shell->group[i].heredoc_fd[k]);
+				k++;
+			}
+		}
+		else 
+			printf("fd = %d", shell->group[i].in_fd);
+		printf("\n");
+		j = 0;
+		i++;
+	}
 }
 
 int main(int argc, char **argv, char **envp)

@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:34:46 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/05 16:26:28 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/12 12:56:05 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	free_group(t_arg *group, int group_num)
 		return ;
 	while (i < group_num)
 	{
-		if (group[i].limiter)
-			free(group[i].limiter);
+		if (group[i].heredoc_fd)
+			free(group[i].heredoc_fd);
 		if (group[i].cmd)
 			free_str_array(group[i].cmd);
 		i++;

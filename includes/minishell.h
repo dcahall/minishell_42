@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/11 11:16:05 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:46:38 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_arg
 {
 	int		in_fd;
 	int		out_fd;
+	int		heredoc_fd_num;
+	int		*heredoc_fd;
 	char	*limiter;
 	char	**cmd;
 }	t_arg;
@@ -91,10 +93,14 @@ t_list	*create_token_list(char *cmd_line);
 void	merge_tokens(t_list **tokens);
 void	delete_empty_tokens(t_list **tokens);
 void	delete_file_tokens(t_list **tokens);
+void	delete_heredoc_group(t_list **tokens, int group_num);
+void	del_elem(t_list **tokens, t_list *delete);
 
 int		parser(char *cmd_line, t_shell *shell);
-int		create_group(t_shell *shell, t_list **tokens);
-int		handle_all_file(t_shell *shell, t_list **tokens, t_arg *l_group);
+void	create_group(t_shell *shell, t_list **tokens);
+void	handle_heredoc(t_shell *shell, t_list **tokens);
+void	handle_all_file(t_shell *shell, t_list **tokens, t_arg *l_group);
+t_list	*handle_heredoc_files(t_shell *shell, t_arg *group, t_list *tokens);
 void	get_command_argument(t_arg *group, t_list *tokens, int group_num);
 char	*remove_extra_spaces(char *str, int start, int end);
 char	*remove_empty_quote(char *str);

@@ -6,13 +6,13 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 17:03:42 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/07 14:23:17 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/12 16:47:09 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	del_elem(t_list **tokens, t_list *delete)
+void	del_elem(t_list **tokens, t_list *delete)
 {
 	t_list	*tmp;
 	t_list	*runner;
@@ -100,7 +100,7 @@ void	delete_file_tokens(t_list **tokens)
 	while (runner)
 	{
 		if (runner->type == REDIRECT_IN || runner->type == REDIRECT_OUT
-			|| runner->type == DOUBLE_REDIRECT || runner->type == HERE_DOC)
+			|| runner->type == DOUBLE_REDIRECT)
 		{
 			delete1 = runner;
 			delete2 = runner->next;
@@ -110,5 +110,25 @@ void	delete_file_tokens(t_list **tokens)
 		}
 		else
 			runner = runner->next;
+	}
+}
+
+void	delete_heredoc_group(t_list **tokens, int group_num)
+{
+	t_list	*runner;
+	int		i;
+
+	i = 0;
+	runner = *tokens;
+	while (i != group_num)
+	{
+		if (runner->type == PIPE)
+			i++;
+		runner = runner->next;
+	}
+	while (runner && runner->type != PIPE)
+	{
+		del_elem(tokens, runner);
+		runner = runner->next;
 	}
 }

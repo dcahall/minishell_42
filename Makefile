@@ -23,7 +23,7 @@ LIBFT			=	libft.a
 PARSER_LST		=	remove_extra_spaces.c		preparser.c					parser.c\
 					create_tokens_list.c		remove_empty_quote.c		parse_dollar.c\
 					create_group.c				handle_file_tokens.c		handle_command_tokens.c\
-					delete_merge_tokens.c
+					delete_merge_tokens.c		handle_heredoc.c
 
 UTILS_LST		=	find_env_value.c			malloc_error_free.c			add_piece_to_str.c\
 					error_occured.c				file_opener.c				convert_env_to_lst.c\

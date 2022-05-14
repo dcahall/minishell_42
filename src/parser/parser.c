@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 13:27:48 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/07 17:22:04 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/11 15:11:52 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,7 @@ int	parser(char *cmd_line, t_shell *shell)
 	if (!cmd_line)
 		return (EXIT_FAILURE);
 	tokens = create_token_list(cmd_line);
-	if (create_group(shell, &tokens) == EXIT_FAILURE)
-	{
-		ft_lstclear(&tokens, free);
-		try_free(cmd_line);
-		return (EXIT_FAILURE);
-	}
+	create_group(shell, &tokens);
 	ft_lstclear(&tokens, free);
 	try_free(cmd_line);
 	return (EXIT_SUCCESS);
