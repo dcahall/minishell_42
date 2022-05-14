@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   DELETE_ME                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:58:46 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/11 12:06:40 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 12:49:05 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ pid_t	create_child(int *fd)
 	return (pid);
 }
 
-void	parent(int *fd, int pid, int *fdin)
+void	parent(int *fd, int pid)
 {
 	int status;
 
-	(void)fdin;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
@@ -67,5 +66,5 @@ void	heredoc(char *limiter, int *fdin)
 		close(fd[1]);
 	}
 	else
-		parent(fd, pid, fdin);
+		parent(fd, pid);
 }

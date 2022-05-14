@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_occured.c                                    :+:      :+:    :+:   */
+/*   get_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/26 15:20:27 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/11 14:52:20 by cvine            ###   ########.fr       */
+/*   Created: 2022/05/11 19:17:23 by cvine             #+#    #+#             */
+/*   Updated: 2022/05/11 19:22:59 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_occured(const char *the_reason, char *error_message)
+t_builtin_f	get_builtin(char **cmd, t_builtin *builtin)
 {
-	if (error_message == NULL)
-		error_message = strerror(errno);
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd((char *)the_reason, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd((char *)error_message, STDERR_FILENO);
-	g_exit_status = EXIT_CMD_NOT_FOUND;
+	int	i;
+
+	i = 0;
+	while (i < NUM_OF_BUILTIN)
+	{
+		if (!ft_strcmp(*cmd, builtin[i].name))
+			return (builtin[i].func);
+		i++;
+	}
+	return (NULL);
 }
