@@ -34,7 +34,7 @@
 
 /* This definition is needed by readline.c, rltty.c, and signals.c. */
 /* If on, then readline handles signals in a way that doesn't suck. */
-#define HANDLE_SIGNALS
+#define prompt_signals
 
 /* Ugly but working hack for binding prefix meta. */
 #define PREFIX_META_HACK

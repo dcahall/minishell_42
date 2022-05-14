@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 11:45:36 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/14 11:41:30 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 13:40:25 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	execute(t_shell *shell)
 	j = 0;
 	while (i < shell->group_num)
 	{
+		signal(SIGINT, proc_signals);
+		signal(SIGQUIT, proc_signals);
 		if (shell->group[i].cmd)
 		{
 			redirect_input(shell, i, j, &fdin);

@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/14 11:23:31 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 13:40:11 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int main(int argc, char **argv, char **envp)
 	init_shell(&shell, envp);
 	while (1)
 	{
-		ft_signal();
+		prompt_signals();
 		mini_init(&shell);
 		minishell(&shell);
 		free_group(shell.group, shell.group_num);
