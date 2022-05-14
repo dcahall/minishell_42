@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/12 16:46:01 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 13:40:25 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void		ft_exit(char **cmd, t_list **env_head);
 /* SIGNALS */
 
 int 		ctrl_d(void);
-void 		ft_signal(void);
-void		interrupt_process(int sig);
+void 		prompt_signals(void);
+void		proc_signals(int signum);
 
 # endif 

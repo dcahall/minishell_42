@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 11:45:36 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/12 19:03:05 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 13:40:25 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ In other group looks if there is a open infile, then saves it to fdin;
 */
 static void	redirect_input(t_shell *shell, int i, int j, int *fdin)
 {
-	/* For the first group only */
 	if (!i && shell->group[0].in_fd == shell->std_in)
 		*fdin = dup(shell->std_in);
-	if (shell->group[i].heredoc_fd && shell->group[i].heredoc_fd[j])
-		*fdin = dup(shell->group[i].heredoc_fd[j]);
+		
+	(void)j;
+	// if (shell->group[i].heredoc_fd && shell->group[i].heredoc_fd[j])
+	// 	*fdin = dup(shell->group[i].heredoc_fd[j]);
 	if (shell->group[i].in_fd != PIPE && shell->group[i].in_fd != shell->std_in)
 		*fdin = shell->group[i].in_fd;
 	dup2(*fdin, STDIN_FILENO);
@@ -77,6 +78,8 @@ void	execute(t_shell *shell)
 	j = 0;
 	while (i < shell->group_num)
 	{
+		signal(SIGINT, proc_signals);
+		signal(SIGQUIT, proc_signals);
 		if (shell->group[i].cmd)
 		{
 			redirect_input(shell, i, j, &fdin);
@@ -86,9 +89,9 @@ void	execute(t_shell *shell)
 			else
 				exec_bin(shell, shell->group[i].cmd);
 		}
-		if (shell->group[i].heredoc_fd && shell->group[i].heredoc_fd[j])
-			j++;
-		else
+		// if (shell->group[i].heredoc_fd && shell->group[i].heredoc_fd[j])
+		// 	j++;
+		// else
 			i++;
 	}
 	restore_io_defaults(shell);

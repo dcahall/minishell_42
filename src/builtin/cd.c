@@ -6,16 +6,18 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:09:15 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/11 16:40:32 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 09:04:40 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* updates working directory value in local envp\
-of the specified variable "var" */
+/*
+updates working directory value in local envp
+of the specified variable "var"
+*/
 
-static void update_wd_value(t_list *envp, char *var)
+static void	update_wd_value(t_list *envp, char *var)
 {
 	t_list	*pwd;
 	char	*cwd;
@@ -45,8 +47,10 @@ static void	change_to_path(const char *path, t_list *envp)
 	}
 }
 
-/* Changes directory into a specified path.\
-For special chars indicating home or oldpwd it's checking wether they are set */
+/*
+Changes directory into a specified path.
+For special chars indicating home or oldpwd it's checking wether they are set
+*/
 
 static void	change_dir(const char *path, t_list *envp, char *errmsg)
 {
@@ -57,10 +61,7 @@ static void	change_dir(const char *path, t_list *envp, char *errmsg)
 		return ;
 	}
 	change_to_path(path, envp);
-	
 }
-
-/* changes directory */
 
 void	cd(char **cmd, t_list **envp)
 {

@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/14 09:04:44 by cvine             #+#    #+#             */
+/*   Updated: 2022/05/14 09:05:14 by cvine            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	echo(char **cmd, t_list **env_head)
 {
 	int	i;
-	int n_flag;
+	int	n_flag;
 
 	(void)env_head;
 	i = 1;
@@ -14,7 +26,8 @@ void	echo(char **cmd, t_list **env_head)
 		i++;
 		n_flag = 0;
 	}
-	while (cmd[i]) {
+	while (cmd[i])
+	{
 		ft_putstr_fd(cmd[i++], STDOUT_FILENO);
 		if (cmd[i])
 			ft_putstr_fd(" ", STDOUT_FILENO);
