@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/12 19:05:40 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 11:23:31 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,10 @@ int main(int argc, char **argv, char **envp)
 		shell.group = NULL;
 	}
 	super_cleaner(&shell);
+	// (void)argc;
+	// (void)argv;
+	// (void)envp;
+	// char *path = "/Users/cvine/Desktop/msh/clean_memory.sh";
+	// char *arg[] = {path, NULL};
+	// execve(path, arg, envp);
 }

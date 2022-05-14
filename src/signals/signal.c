@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:15:03 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/12 19:15:43 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 09:09:33 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	interrupt_process(int sig)
 	(void)sig;
 	g_exit_status = EXIT_FAILURE;
 	write(1, "\n", 1);
+	signal(SIGINT, interrupt_process);
 }
 
 void	ctrl_c(int sig)
@@ -31,11 +32,12 @@ void	ctrl_c(int sig)
 	rl_redisplay();
 }
 
-void ft_signal(void)
+void	ft_signal(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
+
+	sa.sa_handler = ctrl_c;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
-	sa.sa_handler = ctrl_c;
 	sigaction(SIGINT, &sa, NULL);
 }
