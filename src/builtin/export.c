@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:47:26 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/08 18:16:40 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/11 16:40:32 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	export_var(char	**cmd, t_list **env_head)
 
 void	export(char	**cmd, t_list **env_head)
 {
-	g_exit_status = 0;
+	g_exit_status = EXIT_SUCCESS;
 	if (!cmd[1])
 		print_sorted_envp(env_head);
 	else

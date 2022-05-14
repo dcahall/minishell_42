@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 12:31:10 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/08 12:53:57 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/11 16:40:48 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	id_error(char *id, char *msg)
 	ft_putstr_fd(id, STDERR_FILENO);
 	ft_putstr_fd("': ", STDERR_FILENO);
 	ft_putendl_fd(ERR_UNSET, STDERR_FILENO);
-	g_exit_status = 1;
+	g_exit_status = EXIT_FAILURE;
 }
 
 void	is_valid_id(char *id, char *msg, int cmd)

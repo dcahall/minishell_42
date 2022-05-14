@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/11 11:16:05 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 13:40:25 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,34 @@
 
 int	g_exit_status;
 
-typedef void	(*t_func_ptr)(char **cmd, t_list **env_head);
-typedef			t_func_ptr	t_builtin_func;
+typedef void	(*t_func)(char **cmd, t_list **env_head);
+typedef			t_func	t_builtin_f;
 
 typedef struct s_builtin
 {
-	const char		*name;
-	t_builtin_func	func_ptr;
+	const char	*name;
+	t_builtin_f	func;
 }	t_builtin;
 
 typedef struct s_arg
 {
-	int		in_fd;
+	int		in_fd;							
 	int		out_fd;
-	char	*limiter;
+	char 	*limiter;						/* limiter word */
+	int		heredoc_fd_num;					/* number of heredoc infiles */
+	int		*heredoc_fd;					/* array of heredoc infiles */
 	char	**cmd;
 }	t_arg;
 
 typedef struct s_shell
 {
-	int		std_out; 						/* DEFAULT STDOUT FD */
-	int		std_in;							/* DEFAULT STDIN FD */
-	int		out_fd;							/* OUTFILE IN THE LAST GROUP */
-	int		group_num;						/* number of groups */
-	t_arg	*group;							/* list of groups */
-	t_list	*env_lst;						/* list representation of envp */
-	char	**env_str;						/* copy of envp */
+	int			std_out;					/* DEFAULT STDOUT FD */
+	int			std_in;						/* DEFAULT STDIN FD */
+	int			out_fd;						/* OUTFILE IN THE LAST GROUP */
+	int			group_num;					/* number of groups */
+	t_arg		*group;						/* list of groups */
+	t_list		*env_lst;					/* list representation of envp */
+	char		**env_str;					/* copy of envp */
 	t_builtin	builtin[NUM_OF_BUILTIN];	/* list of builtins */
 }	t_shell;
 
@@ -126,34 +128,35 @@ void	error_occured(const char *the_reason, char *error_message);
 
 int		open_file(char *file, int occasion);
 
-int				arg_count(char	**cmd);
-void			init_builtin(t_shell *shell);
-int				get_2d_array_len(char **array);
-void			heredoc(char *limiter, int *fdin);
-t_list			*get_envp(t_list *env_head, char *var);
-char			*get_envp_value(t_list *env_head, char *var);
-t_builtin_func	get_builtin(char	**cmd, t_builtin *builtin);
-void			quicksort_2d_array(char **array, int left, int right);
-void			is_valid_id(char *id, char *msg, int cmd);
+int			arg_count(char **cmd);
+void		init_builtin(t_shell *shell);
+int			get_2d_array_len(char **array);
+t_list		*get_envp(t_list *env_head, char *var);
+void		is_valid_id(char *id, char *msg, int cmd);
+t_builtin_f	get_builtin(char **cmd, t_builtin *builtin);
+char		*get_envp_value(t_list *env_head, char *var);
+void		quicksort_2d_array(char **array, int left, int right);
 
 /* EXECUTE */
 
-void			execute(t_shell *shell);
-void			exec_bin(t_shell *shell, char **cmd);
-void			exec_builtin(t_shell *shell, char **cmd);
+void		execute(t_shell *shell);
+void		exec_bin(t_shell *shell, char **cmd);
+void		exec_builtin(t_shell *shell, char **cmd);
 
 /* BUILTIN */
 
-void			cd(char **cmd, t_list **envp);
-void			pwd(char **cmd, t_list **env_head);
-void			env(char **cmd, t_list **env_head);
-void			echo(char **cmd, t_list **env_head);
-void			unset(char **cmd, t_list **env_head);
-void			export(char	**cmd, t_list **env_head);
-void			ft_exit(char **cmd, t_list **env_head);
+void		cd(char **cmd, t_list **envp);
+void		pwd(char **cmd, t_list **env_head);
+void		env(char **cmd, t_list **env_head);
+void		echo(char **cmd, t_list **env_head);
+void		unset(char **cmd, t_list **env_head);
+void		export(char	**cmd, t_list **env_head);
+void		ft_exit(char **cmd, t_list **env_head);
 
 /* SIGNALS */
 
-int ctrl_d(void);
+int 		ctrl_d(void);
+void 		prompt_signals(void);
+void		proc_signals(int signum);
 
 # endif 

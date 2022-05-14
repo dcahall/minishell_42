@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:17:47 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/08 19:32:14 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/14 13:21:46 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define ERR_UNSET				"not a valid identifier"
 # define EXIT_CMD_CNNT_EXEC		126
 # define EXIT_CMD_NOT_FOUND		127
+# define EXIT_TERM_CTRL_C		130
+# define EXIT_STATE_NOT_RECOV	131
 # define EXIT_OUT_OF_RANGE		255
 
 # endif 

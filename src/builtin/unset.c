@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 14:52:32 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/08 18:12:57 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/11 16:40:32 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ static void	unset_var(char	**cmd, t_list **env_head)
 			delete_var(key, env_head);
 		cmd++;
 	}
+	free(key);
 }
 
 void	unset(char **cmd, t_list **env_head)
 {
-	g_exit_status = 0;
+	g_exit_status = EXIT_SUCCESS;
 	if (!cmd[1])
 		return ;
 	unset_var(cmd + 1, env_head);
