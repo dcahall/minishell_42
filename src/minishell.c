@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/14 14:33:19 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 13:34:14 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,5 @@ int main(int argc, char **argv, char **envp)
 		free_group(shell.group, shell.group_num);
 		shell.group = NULL;
 	}
-	super_cleaner(&shell);
-	// (void)argc;
-	// (void)argv;
-	// (void)envp;
-	// char *path = "/Users/cvine/Desktop/msh/clean_memory.sh";
-	// char *arg[] = {path, NULL};
-	// execve(path, arg, envp);
+
 }

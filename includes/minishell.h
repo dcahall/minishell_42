@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/14 14:31:54 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 12:47:47 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	del_elem(t_list **tokens, t_list *delete);
 int		parser(char *cmd_line, t_shell *shell);
 void	create_group(t_shell *shell, t_list **tokens);
 void	handle_heredoc(t_shell *shell, t_list **tokens);
+void	write_heredoc_to_pipe(t_arg *group, char *limiter);
 void	handle_all_file(t_shell *shell, t_list **tokens, t_arg *l_group);
 t_list	*handle_heredoc_files(t_shell *shell, t_arg *group, t_list *tokens);
 void	get_command_argument(t_arg *group, t_list *tokens, int group_num);
@@ -162,5 +163,6 @@ void		ft_exit(char **cmd, t_list **env_head);
 int 		ctrl_d(void);
 void 		prompt_signals(void);
 void		proc_signals(int signum);
+void		heredoc_signals(int signum);
 
 # endif 

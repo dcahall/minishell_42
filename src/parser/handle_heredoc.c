@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:41:50 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/14 14:28:39 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 12:30:00 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,67 +14,31 @@
 
 static t_list	*delete_heredoc_tokens(t_list **tokens)
 {
-	t_list	*runner;
 	t_list	*delete1;
 	t_list	*delete2;
+	t_list	*cmd_token;
+	t_list	*runner;
 
-	runner = *tokens;
-	while (runner->type != HERE_DOC)
-		runner = runner->next;
+	cmd_token = *tokens;
+	runner = cmd_token;
+	if (cmd_token->type == HERE_DOC)
+		cmd_token = cmd_token->next->next;
+	else
+	{
+		runner = cmd_token->next;
+		while (runner->type != HERE_DOC)
+		{
+			runner = runner->next;
+			cmd_token = cmd_token->next;	
+		}
+	}
+	if (cmd_token && cmd_token->type == PIPE)
+		cmd_token = cmd_token->next->next->next;
 	delete1 = runner;
 	delete2 = runner->next;
 	del_elem(tokens, delete2);
 	del_elem(tokens, delete1);
-	return (*tokens);
-}
-
-static char	*update_heredoc_str(char *str, char *add)
-{
-	char	*tmp;
-
-	if (!str)
-	{
-		str = ft_strdup(add);
-		free(add);
-		return (str);
-	}
-	tmp = str;
-	str = ft_strjoin(str, "\n");
-	free(tmp);
-	tmp = str;
-	str = ft_strjoin(str, add);
-	check_malloc_error(str);
-	free(add);
-	free(tmp);
-	return (str);
-}
-
-static void	write_heredoc_to_pipe(t_arg *group, char *limiter)
-{
-	char	*tmp;
-	char	*res_str;
-	int		pipe_fd[2];
-
-	res_str = NULL;
-	while (1)
-	{
-		tmp = readline("> ");
-		if (!tmp)
-			return (try_free(res_str));
-		else if (!*tmp)
-			free(tmp);
-		else if (ft_strncmp(limiter, tmp, ft_strlen(limiter)) == 0)
-			break ;
-		else
-			res_str = update_heredoc_str(res_str, tmp);
-	}
-	try_free(tmp);
-	if (pipe(pipe_fd))
-		exit(EXIT_FAILURE);
-	write(pipe_fd[1], res_str, ft_strlen(res_str));
-	close(pipe_fd[1]);
-	try_free(res_str);
-	group->in_fd = pipe_fd[0];
+	return (cmd_token);
 }
 
 static t_list	*processing_heredoc(t_shell *shell, t_arg *group, \
@@ -132,8 +96,6 @@ void	handle_heredoc(t_shell *shell, t_list **tokens)
 			shell->group[i].limiter = runner->next->content;
 			runner = processing_heredoc(shell, &shell->group[i], &group_start, \
 										tokens);
-			if (i == 0)
-				*tokens = tmp;
 			delete_heredoc_group(tokens, i);
 		}
 		else if (runner)

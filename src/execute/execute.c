@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 11:45:36 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/14 13:40:25 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/15 19:28:58 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ static void	redirect_input(t_shell *shell, int i, int j, int *fdin)
 {
 	if (!i && shell->group[0].in_fd == shell->std_in)
 		*fdin = dup(shell->std_in);
-		
-	(void)j;
-	// if (shell->group[i].heredoc_fd && shell->group[i].heredoc_fd[j])
-	// 	*fdin = dup(shell->group[i].heredoc_fd[j]);
-	if (shell->group[i].in_fd != PIPE && shell->group[i].in_fd != shell->std_in)
+	if (shell->group[i].heredoc_fd && shell->group[i].heredoc_fd[j])
+		*fdin = dup(shell->group[i].heredoc_fd[j]);
+	else if (shell->group[i].in_fd != PIPE && shell->group[i].in_fd != shell->std_in)
 		*fdin = shell->group[i].in_fd;
 	dup2(*fdin, STDIN_FILENO);
 	close (*fdin);
@@ -89,9 +87,9 @@ void	execute(t_shell *shell)
 			else
 				exec_bin(shell, shell->group[i].cmd);
 		}
-		// if (shell->group[i].heredoc_fd && shell->group[i].heredoc_fd[j])
-		// 	j++;
-		// else
+		if (shell->group[i].heredoc_fd && shell->group[i].heredoc_fd[j])
+			j++;
+		else
 			i++;
 	}
 	restore_io_defaults(shell);

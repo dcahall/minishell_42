@@ -43,7 +43,7 @@ static void	init_group_shell(t_shell *shell, t_arg *group, int group_num)
 	}
 }
 
-static void	command_to_lowercase(t_arg	*group, int	group_num)
+static void	command_to_lowercase(t_arg *group, int group_num)
 {
 	int	i;
 

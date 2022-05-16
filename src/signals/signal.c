@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:15:03 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/14 13:49:26 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/16 16:00:34 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,11 @@ void	proc_signals(int signum)
 		g_exit_status = EXIT_STATE_NOT_RECOV;
 		write(1, "Quit: 3\n", 8);
 	}
+}
+
+void	heredoc_signals(int signum)
+{
+	(void)signum;
+	write(1, ">   \n", 5);
+	exit(EXIT_FAILURE);
 }

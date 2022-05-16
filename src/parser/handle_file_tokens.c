@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:56:24 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/12 16:53:22 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/14 15:17:53 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_list	*handle_heredoc_files(t_shell *shell, t_arg *group, t_list *tokens)
 	while (tokens && tokens->type != PIPE)
 	{
 		group->heredoc_fd_num = heredoc_fd_num;
-		get_file_fd(shell, group, tokens, REDIRECT_IN);
+		get_file_fd(shell, group, tokens, HERE_DOC);
 		heredoc_fd_num++;
 		tokens = tokens->next;
 	}
