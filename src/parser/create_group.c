@@ -67,11 +67,11 @@ void	create_group(t_shell *shell, t_list **tokens)
 	init_group_shell(shell, group, group_num);
 	merge_tokens(tokens);
 	delete_empty_tokens(tokens);
-	handle_heredoc(shell, tokens);
-	if (!*tokens)
-		return ;
 	handle_all_file(shell, tokens, group);
 	delete_file_tokens(tokens);
+	if (!*tokens)
+		return ;
+	handle_heredoc(shell, tokens);
 	if (!*tokens)
 		return ;
 	get_command_argument(shell->group, *tokens, group_num);

@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:04:13 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/16 13:34:14 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/17 13:58:47 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	mini_init(t_shell *shell)
 {
 	shell->std_in = dup(STDIN_FILENO);
 	shell->std_out = dup(STDOUT_FILENO);
-	shell->out_fd = shell->std_out;
+	// shell->out_fd = shell->std_out;
 	shell->group = NULL;
 }
 
@@ -58,8 +58,6 @@ static void	minishell(t_shell *shell)
 	// while (i < shell->group_num)
 	// {
 	// 	printf("%d:", i);
-	// 	// if (shell->group[i].limiter)
-	// 	// 	printf("limiter - %s ", shell->group[i].limiter);
 	// 	while (shell->group[i].cmd && shell->group[i].cmd[j])
 	// 	{
 	// 		printf("%s ", shell->group[i].cmd[j]);
@@ -67,15 +65,16 @@ static void	minishell(t_shell *shell)
 	// 	}
 	// 	if (shell->group[i].heredoc_fd)
 	// 	{
-	// 		printf("fd = ");
+	// 		printf("in_heredoc_fd = ");
 	// 		while (k < shell->group[i].heredoc_fd_num)
 	// 		{
 	// 			printf("%d ", shell->group[i].heredoc_fd[k]);
 	// 			k++;
 	// 		}
 	// 	}
-	// 	else 
-	// 		printf("fd = %d", shell->group[i].in_fd);
+	// 	else
+	// 		printf("in_fd = %d", shell->group[i].in_fd);
+	// 	printf("out_fd = %d", shell->group[i].out_fd);
 	// 	printf("\n");
 	// 	j = 0;
 	// 	i++;
@@ -94,6 +93,7 @@ int main(int argc, char **argv, char **envp)
 		prompt_signals();
 		mini_init(&shell);
 		minishell(&shell);
+		release_fd(&shell);
 		free_group(shell.group, shell.group_num);
 		shell.group = NULL;
 	}

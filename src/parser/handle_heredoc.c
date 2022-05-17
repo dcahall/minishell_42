@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:41:50 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/16 12:30:00 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:24:03 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_list	*delete_heredoc_tokens(t_list **tokens)
 		while (runner->type != HERE_DOC)
 		{
 			runner = runner->next;
-			cmd_token = cmd_token->next;	
+			cmd_token = cmd_token->next;
 		}
 	}
 	if (cmd_token && cmd_token->type == PIPE)
@@ -47,7 +47,7 @@ static t_list	*processing_heredoc(t_shell *shell, t_arg *group, \
 	t_list	*runner;
 
 	runner = *token_group;
-	write_heredoc_to_pipe(group, group->limiter);
+	write_heredoc_to_pipe(shell, group, group->limiter);
 	if (group->in_fd == shell->std_in)
 	{
 		while (runner && runner->type != PIPE)
@@ -74,19 +74,16 @@ static t_list	*processing_heredoc(t_shell *shell, t_arg *group, \
 void	handle_heredoc(t_shell *shell, t_list **tokens)
 {
 	t_list	*runner;
-	t_list	*tmp;
 	t_list	*group_start;
 	int		i;
 
 	i = 0;
 	runner = *tokens;
 	group_start = *tokens;
-	tmp = NULL;
 	while (runner)
 	{
 		if (runner->type == PIPE)
 		{
-			tmp = runner;
 			runner = runner->next;
 			group_start = runner;
 			i++;

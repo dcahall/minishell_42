@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:56:24 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/14 15:17:53 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:08:24 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	get_file_fd(t_shell *shell, t_arg *group, t_list *tokens, \
 	fd = open_file(tokens->content, token_type);
 	if (token_type == REDIRECT_IN)
 	{
-		if (group->in_fd != shell->std_in)
+		if (group->in_fd != shell->std_in && group->in_fd != PIPE)
 			close(group->in_fd);
 		group->in_fd = fd;
 	}
@@ -45,6 +45,9 @@ void	handle_all_file(t_shell *shell, t_list **tokens, t_arg *group)
 	{
 		if (runner->type == PIPE && group[i + 1].in_fd == shell->std_in)
 		{
+			if (group[i].out_fd != shell->std_out)
+				close(group[i].out_fd);
+			group[i].out_fd = PIPE;
 			group[i + 1].in_fd = PIPE;
 			i++;
 		}
@@ -53,7 +56,6 @@ void	handle_all_file(t_shell *shell, t_list **tokens, t_arg *group)
 			get_file_fd(shell, &group[i], runner->next, runner->type);
 		runner = runner->next;
 	}
-	shell->out_fd = group[i].out_fd;
 }
 
 static void	malloc_array_fd(t_arg *group, t_list *tokens)

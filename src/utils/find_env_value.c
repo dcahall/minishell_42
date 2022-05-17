@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 14:36:04 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/06 16:39:40 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 16:15:27 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	end_path_name(char *str, int start)
 int	len_env_key(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str && str[i] != '=' && str[i])
 		i++;
@@ -45,7 +45,8 @@ char	*find_env(char **envp, char *str, int start)
 	while (envp[i])
 	{
 		len_env = len_env_key(envp[i]);
-		if ((len_env == end - start) && ft_strncmp(envp[i], env_name, len_env) == 0)
+		if ((len_env == end - start)
+			&& ft_strncmp(envp[i], env_name, len_env) == 0)
 		{
 			env_value = ft_strdup(envp[i]);
 			check_malloc_error(env_value);

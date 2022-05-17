@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:44:02 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/11 19:35:50 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 16:14:38 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	release_fd(t_shell *shell)
 		if (group[i].out_fd != shell->std_out || group[i].out_fd != PIPE)
 			close(group[i].out_fd);
 		if (group[i].in_fd != shell->std_in || group[i].in_fd != PIPE)
-			close(group[i].in_fd);	
+			close(group[i].in_fd);
 		i++;
 	}
 }

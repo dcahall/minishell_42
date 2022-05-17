@@ -6,20 +6,11 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 21:37:17 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/07 17:30:37 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 16:08:19 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	check_empty_string(const char *cmd_line, int *i)
-{
-	while (cmd_line[*i] && ft_isspace(cmd_line[*i]))
-		*i += 1;
-	if (cmd_line[*i] == '\0')
-		return (1);
-	return (0);
-}
 
 static int	check_quote(char *cmd_line, int *i)
 {

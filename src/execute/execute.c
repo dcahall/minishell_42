@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 11:45:36 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/15 19:28:58 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:24:38 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,10 @@ for other grops creates pipes and redirect output/input in a pipe
 */
 static void	redirect_output(t_shell *shell, int i, int *fdin, int *fdout)
 {
-	if (i == shell->group_num - 1)
-	{
-		if (!shell->out_fd)
-			*fdout = dup(shell->std_out);
-		else
-			*fdout = shell->out_fd;
-	}
-	else
+	if (shell->group[i].out_fd == PIPE)
 		create_pipe(fdout, fdin);
+	else
+		*fdout = shell->group[i].out_fd;
 	dup2(*fdout, STDOUT_FILENO);
 	close(*fdout);
 }

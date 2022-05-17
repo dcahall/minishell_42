@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:25:48 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/16 15:55:29 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:19:22 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ static void	child(char *limiter, int *pipe_fd)
 		tmp = readline("> ");
 		if (!tmp && !*tmp)
 			exit(EXIT_SUCCESS);
-		else if (!*tmp)
-			free(tmp);
 		else if (ft_strncmp(limiter, tmp, ft_strlen(limiter)) == 0
 			&& ft_strlen(limiter) == ft_strlen(tmp))
 			break ;
@@ -58,9 +56,10 @@ static void	child(char *limiter, int *pipe_fd)
 	close(pipe_fd[1]);
 	close(pipe_fd[0]);
 	try_free(res_str);
+	exit(EXIT_SUCCESS);
 }
 
-void	write_heredoc_to_pipe(t_arg *group, char *limiter)
+void	write_heredoc_to_pipe(t_shell *shell, t_arg *group, char *limiter)
 {
 	int		id;
 	int		pipe_fd[2];
@@ -79,5 +78,8 @@ void	write_heredoc_to_pipe(t_arg *group, char *limiter)
 	waitpid(id, &exit_status, 0);
 	if (WIFEXITED(exit_status))
 		g_exit_status = WEXITSTATUS(exit_status);
-	group->in_fd = pipe_fd[0];
+	if (group->in_fd == shell->std_in || group->in_fd == PIPE)
+		group->in_fd = pipe_fd[0];
+	else
+		close(pipe_fd[0]);
 }

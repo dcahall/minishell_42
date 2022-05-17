@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_list_to_lst.c                               :+:      :+:    :+:   */
+/*   convert_env_to_lst.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 17:19:32 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/03 15:37:17 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 16:46:11 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,30 +88,29 @@ void	add_new_env(t_list **envp, char *new_env)
 
 void	del_env_param(t_list **envp, char *key)
 {
-	int		len;
-	t_list	*runner;
+	int		ln;
 	t_list	*tmp;
+	t_list	*iter;
 
 	if (!key || !envp)
 		return ;
 	tmp = *envp;
-	runner = tmp->next;
-	len = ft_strlen(key);
-	if (len_env_key(tmp->key) == len && ft_strncmp(tmp->key, key, len) == 0)
+	iter = tmp->next;
+	ln = ft_strlen(key);
+	if (len_env_key(tmp->key) == ln && ft_strncmp(tmp->key, key, ln) == 0)
 	{
 		ft_lstdelone(tmp, free);
-		*envp = runner;
+		*envp = iter;
 		return ;
 	}
-	while (runner)
+	while (iter)
 	{
-		if (len_env_key(runner->key) == len 
-			&& ft_strncmp(runner->key, key, len) == 0)
+		if (len_env_key(iter->key) == ln && ft_strncmp(iter->key, key, ln) == 0)
 		{
-			tmp->next = runner->next;
-			ft_lstdelone(runner, free);
+			tmp->next = iter->next;
+			ft_lstdelone(iter, free);
 		}
 		tmp = tmp->next;
-		runner = runner->next;
+		iter = iter->next;
 	}
 }

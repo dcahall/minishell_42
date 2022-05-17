@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_list_to_char.c                              :+:      :+:    :+:   */
+/*   convert_env_to_char.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/01 11:57:19 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/01 15:08:41 by dcahall          ###   ########.fr       */
+/*   Created: 2022/05/16 16:34:11 by dcahall           #+#    #+#             */
+/*   Updated: 2022/05/16 16:34:15 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*get_list_str(t_list *node)
 	return (final_str);
 }
 
-char **convert_env_lst(t_list *env_lst)
+char	**convert_env_lst(t_list *env_lst)
 {
 	char	**env;
 	int		i;
@@ -47,4 +47,3 @@ char **convert_env_lst(t_list *env_lst)
 	env[i] = NULL;
 	return (env);
 }
-
