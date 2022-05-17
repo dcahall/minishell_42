@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:04:03 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/14 11:43:44 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/17 14:49:50 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*path_to_bin(t_list *envp, char **cmd)
 
 	i = 0;
 	if (ft_strchr(cmd[0], '/') && !access(cmd[0], F_OK | X_OK))
-			return (cmd[0]);
+		return (cmd[0]);
 	env_paths = ft_split(get_envp_value(envp, "PATH="), ':');
 	while (env_paths[i])
 	{
@@ -57,6 +57,7 @@ void	exec_bin(t_shell *shell, char **cmd)
 	int		status;
 	char	*bin_path;
 
+	g_exit_status = 0;
 	bin_path = path_to_bin(shell->env_lst, cmd);
 	if (!bin_path)
 		return ;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:15:03 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/16 16:14:05 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:43:38 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ctrl_c(int sig)
+static void	ctrl_c(int sig)
 {
 	(void)sig;
 	g_exit_status = EXIT_FAILURE;
@@ -24,17 +24,7 @@ void	ctrl_c(int sig)
 	rl_redisplay();
 }
 
-void	prompt_signals(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = ctrl_c;
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-	sigaction(SIGINT, &sa, NULL);
-}
-
-void	proc_signals(int signum)
+static void	proc_sig_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -47,6 +37,23 @@ void	proc_signals(int signum)
 		write(1, "Quit: 3\n", 8);
 	}
 }
+
+void	prompt_signals(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = ctrl_c;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	sigaction(SIGINT, &sa, NULL);
+}
+
+void	proc_signals(void)
+{
+	signal(SIGINT, proc_sig_handler);
+	signal(SIGQUIT, proc_sig_handler);
+}
+
 
 void	heredoc_signals(int signum)
 {
