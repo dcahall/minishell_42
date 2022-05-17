@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:25:56 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/03 15:36:11 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 16:10:35 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ static int	num_empty_quote(char *str)
 static char	*trimm_empty_quote(char *str, char *final_str)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;
 	while (str[j])
 	{
-		if (str[j] == '\'' || str[j] =='"')
+		if (str[j] == '\'' || str[j] == '"')
 			while (is_empty_quote(str, j))
 				j += 2;
 		final_str[i] = str[j];

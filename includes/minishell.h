@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/16 18:30:27 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/17 16:57:19 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef struct s_shell
 {
 	int			std_out;					/* DEFAULT STDOUT FD */
 	int			std_in;						/* DEFAULT STDIN FD */
-	int			out_fd;						/* OUTFILE IN THE LAST GROUP */
 	int			group_num;					/* number of groups */
 	t_arg		*group;						/* list of groups */
 	t_list		*env_lst;					/* list representation of envp */
@@ -99,7 +98,7 @@ void	del_elem(t_list **tokens, t_list *delete);
 int		parser(char *cmd_line, t_shell *shell);
 void	create_group(t_shell *shell, t_list **tokens);
 void	handle_heredoc(t_shell *shell, t_list **tokens);
-void	write_heredoc_to_pipe(t_arg *group, char *limiter);
+void	write_heredoc_to_pipe(t_shell *shell, t_arg *group, char *limiter);
 void	handle_all_file(t_shell *shell, t_list **tokens, t_arg *l_group);
 t_list	*handle_heredoc_files(t_shell *shell, t_arg *group, t_list *tokens);
 void	get_command_argument(t_arg *group, t_list *tokens, int group_num);
@@ -141,6 +140,8 @@ void		is_valid_id(char *id, char *msg, int cmd);
 t_builtin_f	get_builtin(char **cmd, t_builtin *builtin);
 char		*get_envp_value(t_list *env_head, char *var);
 void		quicksort_2d_array(char **array, int left, int right);
+void		redir_in(t_shell *shell, t_arg group, int *fdin, int j);
+void		redir_out(t_arg group, int *fdin, int *fdout);
 
 /* EXECUTE */
 

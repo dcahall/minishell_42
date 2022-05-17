@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 22:40:01 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/06 15:57:52 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 16:34:41 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static char	*join_three_parts(char *add, char *str, int start, int end)
 	char	*tmp1;
 	char	*tmp2;
 	char	*res_str;
-
 
 	tmp1 = ft_substr(str, 0, start);
 	res_str = ft_strjoin(tmp1, add);
@@ -58,10 +57,10 @@ static char	*fuck_norminette(char *str, int start, int end, int len_str)
 	return (res_str);
 }
 
-static char *join_two_parts(char *add, char *str, int start, int end)
+static char	*join_two_parts(char *add, char *str, int start, int end)
 {
 	int		len_str;
-	char 	*tmp1;
+	char	*tmp1;
 	char	*res_str;
 
 	res_str = NULL;

@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:43:07 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/06 18:33:53 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 16:05:20 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	single_symbol(char *cmd_line, int i, t_list *token)
 			token->type = HERE_DOC;
 		return (i + 2);
 	}
-
 	if (ft_isspace(cmd_line[i]) == 0)
 	{
 		if (cmd_line[i] == '|')
@@ -82,7 +81,7 @@ t_list	*create_token_list(char *cmd_line)
 {
 	t_list	*tokens;
 	t_list	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (cmd_line[i])
