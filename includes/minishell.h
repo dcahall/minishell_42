@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/16 12:47:47 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 18:30:27 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void		ft_exit(char **cmd, t_list **env_head);
 
 int 		ctrl_d(void);
 void 		prompt_signals(void);
-void		proc_signals(int signum);
+void		proc_signals(void);
 void		heredoc_signals(int signum);
 
 # endif 

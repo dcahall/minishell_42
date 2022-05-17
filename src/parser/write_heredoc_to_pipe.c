@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write_heredoc_to_pipe.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:25:48 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/16 15:55:29 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/16 16:31:44 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	child(char *limiter, int *pipe_fd)
 	close(pipe_fd[1]);
 	close(pipe_fd[0]);
 	try_free(res_str);
+	exit(EXIT_FAILURE);
 }
 
 void	write_heredoc_to_pipe(t_arg *group, char *limiter)
