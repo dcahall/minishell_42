@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:04:03 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/17 14:49:50 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/18 15:26:53 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,25 @@ static char	*path_to_bin(t_list *envp, char **cmd)
 	char	*tmp;
 	char	*path;
 	char	**env_paths;
+	char	*envp_val;
 
-	i = 0;
 	if (ft_strchr(cmd[0], '/') && !access(cmd[0], F_OK | X_OK))
 		return (cmd[0]);
-	env_paths = ft_split(get_envp_value(envp, "PATH="), ':');
-	while (env_paths[i])
+	envp_val = get_envp_value(envp, "PATH=");
+	if (envp_val)
 	{
-		tmp = ft_strjoin(env_paths[i], "/");
-		path = ft_strjoin(tmp, *cmd);
-		if (!access(path, F_OK | X_OK))
-			return (path);
-		memfree(tmp, path, NULL);
-		i++;
+		i = 0;
+		env_paths = ft_split(envp_val, ':');
+		while (env_paths[i])
+		{
+			tmp = ft_strjoin(env_paths[i++], "/");
+			path = ft_strjoin(tmp, *cmd);
+			if (!access(path, F_OK | X_OK))
+				return (path);
+			memfree(tmp, path, NULL);
+		}
+		memfree(NULL, NULL, env_paths);
 	}
-	memfree(NULL, NULL, env_paths);
 	error_occured(*cmd, CMD_NOT_FOUND);
 	return (NULL);
 }
