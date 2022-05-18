@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 12:47:26 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/11 16:40:32 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/18 14:47:32 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	set_var(t_list **env_head, char *key, char *value)
 	tmp = get_envp(*env_head, key);
 	if (tmp)
 	{
+		free(key);
 		tmp->content = value;
 		return ;
 	}
@@ -42,31 +43,32 @@ static void	set_var(t_list **env_head, char *key, char *value)
 	ft_lstadd_back(env_head, new_var);
 }
 
-static void	export_var(char	**cmd, t_list **env_head)
+static void	set_new_var(char **arg, t_list **env_head)
 {
-	int		i;
+	int		equal_index;
 	char	*key;
 	char	*value;
+	char	*equal_location;
 
-	while (*cmd)
+	while (*arg)
 	{
-		i = 0;
-		is_valid_id(*cmd, "export `", EXPORT);
-		value = ft_strchr_index(*cmd, '=', &i);
-		if (i)
+		equal_index = 0;
+		if (!is_valid_id(*arg, "export `", EXPORT))
 		{
-			if (!value)
+			equal_location = ft_strchr_index(*arg, '=', &equal_index);
+			if (!equal_location)
 			{
-				key = ft_strjoin(*cmd, "=");
+				key = ft_strjoin(*arg, "=");
 				set_var(env_head, key, "");
 			}
 			else
 			{
-				key = ft_substr(*cmd, 0, i + 1);
-				set_var(env_head, key, value + 1);
+				key = ft_substr(*arg, 0, equal_index + 1);
+				value = ft_strdup(equal_location + 1);
+				set_var(env_head, key, value);
 			}
 		}
-		cmd++;
+		arg++;
 	}
 }
 
@@ -76,5 +78,5 @@ void	export(char	**cmd, t_list **env_head)
 	if (!cmd[1])
 		print_sorted_envp(env_head);
 	else
-		export_var(cmd + 1, env_head);
+		set_new_var(cmd + 1, env_head);
 }

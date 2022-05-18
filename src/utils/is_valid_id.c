@@ -6,7 +6,7 @@
 /*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 12:31:10 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/11 16:40:48 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/18 14:36:00 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	id_error(char *id, char *msg)
 	g_exit_status = EXIT_FAILURE;
 }
 
-void	is_valid_id(char *id, char *msg, int cmd)
+int	is_valid_id(char *id, char *msg, int cmd)
 {
 	int	i;
 
@@ -34,8 +34,9 @@ void	is_valid_id(char *id, char *msg, int cmd)
 				|| (id[0] >= 'a' && id[0] <= 'z') || id[0] == '_'))
 		{
 			id_error(id, msg);
-			return ;
+			return (1);
 		}
 		i++;
 	}
+	return (0);
 }
