@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/18 16:26:27 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/18 20:30:57 by cvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int			is_valid_id(char *id, char *msg, int cmd);
 t_builtin_f	get_builtin(char **cmd, t_builtin *builtin);
 char		*get_envp_value(t_list *env_head, char *var);
 void		quicksort_2d_array(char **array, int left, int right);
-int			redir_in(t_shell *shell, t_arg group, int *fdin, int j);
+void		redir_in(t_shell *shell, t_arg group, int *fdin, int j);
 void		redir_out(t_arg group, int *fdin, int *fdout);
 
 /* EXECUTE */
