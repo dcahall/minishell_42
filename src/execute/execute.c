@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 11:45:36 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/17 17:02:22 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/18 17:12:57 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ void	execute(t_shell *shell)
 		proc_signals();
 		if (shell->group[i].cmd)
 		{
-			redir_in(shell, shell->group[i], &fdin, j);
-			redir_out(shell->group[i], &fdin, &fdout);
-			execute_cmd(shell, shell->group[i].cmd);
+			if (redir_in(shell, shell->group[i], &fdin, j) == EXIT_SUCCESS)
+			{
+				redir_out(shell->group[i], &fdin, &fdout);
+				execute_cmd(shell, shell->group[i].cmd);
+			}
+			i++;
+			continue ;
 		}
 		if (shell->group[i].heredoc_fd && shell->group[i].heredoc_fd[j]
 			&& g_exit_status != EXIT_CMD_NOT_FOUND)

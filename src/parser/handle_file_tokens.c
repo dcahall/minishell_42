@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:56:24 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/17 14:08:24 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/18 17:06:52 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static void	get_file_fd(t_shell *shell, t_arg *group, t_list *tokens, \
 	{
 		if (group->in_fd != shell->std_in && group->in_fd != PIPE)
 			close(group->in_fd);
-		group->in_fd = fd;
+		if (group->in_fd != -1)
+			group->in_fd = fd;
+		else if (group->in_fd == -1 && fd != -1)
+			close(fd);
 	}
 	else if ((token_type == DOUBLE_REDIRECT || token_type == REDIRECT_OUT))
 	{
@@ -43,7 +46,7 @@ void	handle_all_file(t_shell *shell, t_list **tokens, t_arg *group)
 	runner = *tokens;
 	while (runner)
 	{
-		if (runner->type == PIPE && group[i + 1].in_fd == shell->std_in)
+		if (runner->type == PIPE)
 		{
 			if (group[i].out_fd != shell->std_out)
 				close(group[i].out_fd);

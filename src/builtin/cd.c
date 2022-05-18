@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:09:15 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/14 09:04:40 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/18 16:43:36 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	cd(char **cmd, t_list **envp)
 	char	*path;
 
 	g_exit_status = EXIT_SUCCESS;
-	if (!cmd[1] || !ft_strncmp(cmd[1], "~", 1) || !ft_strncmp(cmd[1], "--", 2))
+	if (!cmd[1] || !ft_strcmp(cmd[1], "~") || !ft_strcmp(cmd[1], "--"))
 		change_dir(get_envp_value(*envp, "HOME="), *envp, "HOME not set");
 	else if (!ft_strncmp(cmd[1], "-", 1))
 	{

@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:34:46 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/17 13:36:28 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/18 16:18:03 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_str_array(char **array)
 	i = 0;
 	while (array && array[i])
 	{
-		free(array[i]);
+		try_free(array[i]);
 		i++;
 	}
 	free(array);

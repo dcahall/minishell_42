@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:30:27 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/06 16:34:40 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/18 16:17:46 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,12 @@ char	*parse_dollar(char *cmd_line, t_shell *shell)
 		if (cmd_line[i] == '\'')
 			skip_quote(cmd_line, &i);
 		else if (cmd_line[i] == '$')
+		{
+			if (shell->env_str)
+				free_str_array(shell->env_str);
+			shell->env_str = convert_env_lst(shell->env_lst);
 			cmd_line = handle_dollar(cmd_line, shell->env_str, &i);
+		}
 		else
 			i++;
 	}

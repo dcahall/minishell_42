@@ -6,7 +6,7 @@
 /*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:29:23 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/18 14:34:54 by dcahall          ###   ########.fr       */
+/*   Updated: 2022/05/18 16:26:27 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "readline/readline.h"
 # include "readline/history.h"
 # define BINARY				-1
-# define PIPE				-1
+# define PIPE				-2
 # define WORD				0
 # define REDIRECT_OUT		1
 # define REDIRECT_IN		2
@@ -132,21 +132,19 @@ int			arg_count(char **cmd);
 void		init_builtin(t_shell *shell);
 int			get_2d_array_len(char **array);
 t_list		*get_envp(t_list *env_head, char *var);
-void		is_valid_id(char *id, char *msg, int cmd);
+int			is_valid_id(char *id, char *msg, int cmd);
 t_builtin_f	get_builtin(char **cmd, t_builtin *builtin);
 char		*get_envp_value(t_list *env_head, char *var);
 void		quicksort_2d_array(char **array, int left, int right);
-void		redir_in(t_shell *shell, t_arg group, int *fdin, int j);
+int			redir_in(t_shell *shell, t_arg group, int *fdin, int j);
 void		redir_out(t_arg group, int *fdin, int *fdout);
 
 /* EXECUTE */
-
 void		execute(t_shell *shell);
 void		exec_bin(t_shell *shell, char **cmd);
 void		exec_builtin(t_shell *shell, char **cmd);
 
 /* BUILTIN */
-
 void		cd(char **cmd, t_list **envp);
 void		pwd(char **cmd, t_list **env_head);
 void		env(char **cmd, t_list **env_head);
