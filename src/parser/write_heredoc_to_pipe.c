@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write_heredoc_to_pipe.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:25:48 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/17 15:58:55 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/18 14:59:48 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	write_heredoc_to_pipe(t_shell *shell, t_arg *group, char *limiter)
 	if (pipe(pipe_fd))
 		exit(EXIT_FAILURE);
 	id = fork();
+	if (id == -1)
+		exit(EXIT_FAILURE);
 	if (id == 0)
 	{
 		signal(SIGINT, heredoc_signals);

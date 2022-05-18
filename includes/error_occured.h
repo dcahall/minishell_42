@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_occured.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:17:47 by dcahall           #+#    #+#             */
-/*   Updated: 2022/05/14 13:21:46 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/17 18:38:54 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,4 @@
 # define EXIT_STATE_NOT_RECOV	131
 # define EXIT_OUT_OF_RANGE		255
 
-# endif 
+#endif 

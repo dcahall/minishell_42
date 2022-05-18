@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvine <cvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcahall <dcahall@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:15:03 by cvine             #+#    #+#             */
-/*   Updated: 2022/05/17 14:43:38 by cvine            ###   ########.fr       */
+/*   Updated: 2022/05/17 18:46:38 by dcahall          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	proc_signals(void)
 	signal(SIGINT, proc_sig_handler);
 	signal(SIGQUIT, proc_sig_handler);
 }
-
 
 void	heredoc_signals(int signum)
 {
